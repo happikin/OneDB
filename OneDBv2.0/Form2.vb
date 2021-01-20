@@ -10,7 +10,25 @@ Public Class Form2
     Dim sqlDT As New DataTable
     Dim sqlDR As MySqlDataReader
 
+    Public Sub showData(ByVal tableName As String)
+        sqlDT.Clear()
+        sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=sakila;"
+        sqlConn.Open()
+        sqlCmd.Connection = sqlConn
+        sqlCmd.CommandText = "SELECT * FROM SAKILA." + tableName + ";"
+        'sqlCmd.ExecuteNonQuery()
+        sqlDR = sqlCmd.ExecuteReader
+        sqlDT.Load(sqlDR)
+        sqlDR.Close()
+        sqlConn.Close()
+        DataGridView1.DataSource = sqlDT
+        sqlDT.Clear()
+        sqlCmd.Parameters.Clear()
+    End Sub
+
+
     Public Sub refreshGrid()
+        sqlDT.Clear()
         sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=sakila;"
         sqlCmd.Connection = sqlConn
         sqlConn.Open()
@@ -26,6 +44,7 @@ Public Class Form2
             ComboBox1.Items.Add(sqlDT.Rows(index).Item(0).ToString)
         Next
         MsgBox(DataGridView1.Rows(0).Cells(0).Value.ToString, 1, MsgBoxStyle.Information)
+        sqlDT.Clear()
     End Sub
     Public Sub showTables()
         sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=sakila;"
@@ -42,6 +61,7 @@ Public Class Form2
         For index = 0 To sqlDT.Rows.Count - 1
             ComboBox1.Items.Add(sqlDT.Rows(index).Item(0).ToString)
         Next
+        sqlDT.Clear()
         'MsgBox(DataGridView1.Rows(0).Cells(0).Value.ToString, 1, MsgBoxStyle.Information)
     End Sub
 
@@ -55,6 +75,7 @@ Public Class Form2
         DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         themeState = 0
         Panel2.BringToFront()
+        Button7.BackColor = Color.White
         Panel4.BackColor = Color.White
         Panel2.BackColor = Color.White
         Button2.BackColor = Color.White
@@ -75,7 +96,7 @@ Public Class Form2
         Timer1.Stop()
     End Sub
 
-    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
+    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs)
 
     End Sub
 
@@ -110,6 +131,7 @@ Public Class Form2
     End Sub
 
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click   'TOGGLE BUTTON
+        Panel2.Visible = False
         If themeState = 0 Then  'if light theme
             Panel2.BackColor = Color.Black
             Button2.BackColor = Color.Black
@@ -118,6 +140,7 @@ Public Class Form2
             Button5.BackColor = Color.Black
             Button6.BackColor = Color.Black
             Me.BackColor = Color.Black
+            Button7.BackColor = Color.Black
             Button1.Image = My.Resources.MenuDarkMode
             Button6.Text = "Light Mode"
             themeState = 1
@@ -125,6 +148,7 @@ Public Class Form2
             Panel2.BackColor = Color.White
             Button2.BackColor = Color.White
             Button3.BackColor = Color.White
+            Button7.BackColor = Color.White
             Button4.BackColor = Color.White
             Button5.BackColor = Color.White
             Button6.BackColor = Color.White
@@ -140,11 +164,16 @@ Public Class Form2
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        Panel2.Visible = False
         MessageBox.Show("Created By : Yashesvi Raina(Happikin)   https://github.com/happikin ", "About", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
     Private Sub RefreshButton1_Click(sender As Object, e As EventArgs) Handles RefreshButton1.Click
         refreshGrid()
+    End Sub
 
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        showData(ComboBox1.SelectedItem)
+        Panel2.Visible = False
     End Sub
 End Class

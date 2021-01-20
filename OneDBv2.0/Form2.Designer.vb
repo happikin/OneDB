@@ -26,9 +26,10 @@ Partial Class Form2
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form2))
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Button7 = New System.Windows.Forms.Button()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.Button6 = New System.Windows.Forms.Button()
@@ -41,36 +42,24 @@ Partial Class Form2
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.Panel2.SuspendLayout()
         Me.Panel4.SuspendLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Panel1
         '
         Me.Panel1.BackgroundImage = CType(resources.GetObject("Panel1.BackgroundImage"), System.Drawing.Image)
-        Me.Panel1.Location = New System.Drawing.Point(0, 556)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1280, 164)
+        Me.Panel1.Size = New System.Drawing.Size(1280, 720)
         Me.Panel1.TabIndex = 0
         Me.Panel1.Visible = False
         '
         'Timer1
         '
-        '
-        'DataGridView1
-        '
-        Me.DataGridView1.BackgroundColor = System.Drawing.Color.Snow
-        Me.DataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.GridColor = System.Drawing.Color.Teal
-        Me.DataGridView1.Location = New System.Drawing.Point(12, 157)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.RowHeadersWidth = 62
-        Me.DataGridView1.RowTemplate.Height = 33
-        Me.DataGridView1.Size = New System.Drawing.Size(1256, 551)
-        Me.DataGridView1.TabIndex = 1
         '
         'Button1
         '
@@ -89,6 +78,7 @@ Partial Class Form2
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.Color.Black
+        Me.Panel2.Controls.Add(Me.Button7)
         Me.Panel2.Controls.Add(Me.ComboBox1)
         Me.Panel2.Controls.Add(Me.Panel3)
         Me.Panel2.Controls.Add(Me.Button5)
@@ -98,13 +88,36 @@ Partial Class Form2
         Me.Panel2.Controls.Add(Me.Button2)
         Me.Panel2.Location = New System.Drawing.Point(12, 51)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(200, 375)
+        Me.Panel2.Size = New System.Drawing.Size(200, 448)
         Me.Panel2.TabIndex = 3
+        '
+        'Button7
+        '
+        Me.Button7.BackColor = System.Drawing.Color.Black
+        Me.Button7.FlatAppearance.BorderSize = 0
+        Me.Button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button7.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.Button7.ForeColor = System.Drawing.Color.Teal
+        Me.Button7.Location = New System.Drawing.Point(0, 216)
+        Me.Button7.Name = "Button7"
+        Me.Button7.Size = New System.Drawing.Size(198, 52)
+        Me.Button7.TabIndex = 11
+        Me.Button7.Text = "Show"
+        Me.Button7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button7.UseVisualStyleBackColor = False
+        '
+        'ComboBox1
+        '
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Location = New System.Drawing.Point(12, 23)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(175, 33)
+        Me.ComboBox1.TabIndex = 10
         '
         'Panel3
         '
         Me.Panel3.BackColor = System.Drawing.Color.Teal
-        Me.Panel3.Location = New System.Drawing.Point(12, 223)
+        Me.Panel3.Location = New System.Drawing.Point(12, 305)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(175, 1)
         Me.Panel3.TabIndex = 9
@@ -116,7 +129,7 @@ Partial Class Form2
         Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button5.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.Button5.ForeColor = System.Drawing.Color.Teal
-        Me.Button5.Location = New System.Drawing.Point(1, 283)
+        Me.Button5.Location = New System.Drawing.Point(1, 365)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(198, 52)
         Me.Button5.TabIndex = 4
@@ -131,7 +144,7 @@ Partial Class Form2
         Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button6.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.Button6.ForeColor = System.Drawing.Color.Teal
-        Me.Button6.Location = New System.Drawing.Point(1, 234)
+        Me.Button6.Location = New System.Drawing.Point(1, 316)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(198, 52)
         Me.Button6.TabIndex = 3
@@ -267,13 +280,16 @@ Partial Class Form2
         Me.Label1.TabIndex = 10
         Me.Label1.Text = "OneDB"
         '
-        'ComboBox1
+        'DataGridView1
         '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(12, 23)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(175, 33)
-        Me.ComboBox1.TabIndex = 10
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Location = New System.Drawing.Point(13, 125)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.RowHeadersWidth = 62
+        Me.DataGridView1.RowTemplate.Height = 33
+        Me.DataGridView1.Size = New System.Drawing.Size(1254, 583)
+        Me.DataGridView1.TabIndex = 10
         '
         'Form2
         '
@@ -294,17 +310,16 @@ Partial Class Form2
         Me.Name = "Form2"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MainOperationForm"
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel2.ResumeLayout(False)
         Me.Panel4.ResumeLayout(False)
         Me.Panel4.PerformLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Timer1 As Timer
-    Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents Button1 As Button
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Button4 As Button
@@ -320,4 +335,6 @@ Partial Class Form2
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents ComboBox1 As ComboBox
+    Friend WithEvents Button7 As Button
+    Friend WithEvents DataGridView1 As DataGridView
 End Class
