@@ -7,46 +7,55 @@ Public Class Form2
     Dim sqlConn As New MySqlConnection
     Dim sqlCmd As New MySqlCommand
     Dim sqlDA As New MySqlDataAdapter
-    Dim sqlDT As New DataTable
-    Dim sqlDR As MySqlDataReader
+
 
     Public Sub showData(ByVal tableName As String)
+        Dim sqlDT As New DataTable
+        Dim sqlDR As MySqlDataReader
         sqlDT.Clear()
+        sqlConn.Close()
         sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=sakila;"
         sqlConn.Open()
         sqlCmd.Connection = sqlConn
-        sqlCmd.CommandText = "SELECT * FROM SAKILA." + tableName + ";"
-        'sqlCmd.ExecuteNonQuery()
+        sqlCmd.CommandText = "select * from " + tableName
         sqlDR = sqlCmd.ExecuteReader
         sqlDT.Load(sqlDR)
         sqlDR.Close()
         sqlConn.Close()
         DataGridView1.DataSource = sqlDT
-        sqlDT.Clear()
-        sqlCmd.Parameters.Clear()
     End Sub
 
 
-    Public Sub refreshGrid()
+    Public Sub fillComboBox()   'will fill the combobox with the list of all the tables in the database
+        Dim sqlDT As New DataTable
+        Dim sqlDR As MySqlDataReader
         sqlDT.Clear()
+        sqlConn.Close()
         sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=sakila;"
         sqlCmd.Connection = sqlConn
         sqlConn.Open()
         sqlCmd.CommandText = "SHOW TABLES;"
-        'sqlCmd.ExecuteNonQuery()
         sqlDR = sqlCmd.ExecuteReader
-        sqlDT.Load(sqlDR)
+
+        Try
+            sqlDT.Load(sqlDR)
+        Catch ex As Exception
+            MsgBox("Nope not working", 1, MsgBoxStyle.Information)
+        End Try
+
         sqlDR.Close()
-        DataGridView1.DataSource = sqlDT
         sqlCmd.Parameters.Clear()
         sqlConn.Close()
         For index = 0 To sqlDT.Rows.Count - 1
-            ComboBox1.Items.Add(sqlDT.Rows(index).Item(0).ToString)
+            If ComboBox1.Items.Contains(sqlDT.Rows(index).Item(0)) = False Then
+                ComboBox1.Items.Add(sqlDT.Rows(index).Item(0).ToString)
+            End If
         Next
-        MsgBox(DataGridView1.Rows(0).Cells(0).Value.ToString, 1, MsgBoxStyle.Information)
         sqlDT.Clear()
     End Sub
     Public Sub showTables()
+        Dim sqlDT As New DataTable
+        Dim sqlDR As MySqlDataReader
         sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=sakila;"
         sqlCmd.Connection = sqlConn
         sqlConn.Open()
@@ -58,9 +67,6 @@ Public Class Form2
         'DataGridView1.DataSource = sqlDT
         'sqlCmd.Parameters.Clear()
         sqlConn.Close()
-        For index = 0 To sqlDT.Rows.Count - 1
-            ComboBox1.Items.Add(sqlDT.Rows(index).Item(0).ToString)
-        Next
         sqlDT.Clear()
         'MsgBox(DataGridView1.Rows(0).Cells(0).Value.ToString, 1, MsgBoxStyle.Information)
     End Sub
@@ -69,13 +75,13 @@ Public Class Form2
     Public themeState As Integer '0 for Light Mode;1 for Dark Mode
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        showTables()
-        DataGridView1.GridColor = Color.Teal
-        DataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Sunken
-        DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        'DataGridView1.GridColor = Color.Teal
+        'DataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Sunken
+
         themeState = 0
         Panel2.BringToFront()
         Button7.BackColor = Color.White
+        Button8.BackColor = Color.White
         Panel4.BackColor = Color.White
         Panel2.BackColor = Color.White
         Button2.BackColor = Color.White
@@ -122,7 +128,7 @@ Public Class Form2
     End Sub
 
     Private Sub CloseButton1_Click(sender As Object, e As EventArgs) Handles RButton1.Click
-        MessageBox.Show("Good Bye!", "!!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
+        'MessageBox.Show("Good Bye!", "!!", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End
     End Sub
 
@@ -139,6 +145,8 @@ Public Class Form2
             Button4.BackColor = Color.Black
             Button5.BackColor = Color.Black
             Button6.BackColor = Color.Black
+            Button8.BackColor = Color.Black
+
             Me.BackColor = Color.Black
             Button7.BackColor = Color.Black
             Button1.Image = My.Resources.MenuDarkMode
@@ -146,6 +154,7 @@ Public Class Form2
             themeState = 1
         ElseIf themeState = 1 Then  'If dark mode
             Panel2.BackColor = Color.White
+            Button8.BackColor = Color.White
             Button2.BackColor = Color.White
             Button3.BackColor = Color.White
             Button7.BackColor = Color.White
@@ -169,11 +178,26 @@ Public Class Form2
     End Sub
 
     Private Sub RefreshButton1_Click(sender As Object, e As EventArgs) Handles RefreshButton1.Click
-        refreshGrid()
+        fillComboBox()
     End Sub
 
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
-        showData(ComboBox1.SelectedItem)
+        If ComboBox1.SelectedItem <> Nothing Then
+            showData(ComboBox1.SelectedItem.ToString)
+        Else
+            MsgBox("Please select a table name!", MsgBoxStyle.Information, "Message")
+        End If
+
+        If DataGridView1.DisplayedColumnCount(True) * DataGridView1.Columns.GetColumnsWidth(DataGridViewElementStates.Resizable) < 1200 Then
+            DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+
+        Else
+            DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+        End If
         Panel2.Visible = False
+    End Sub
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+
     End Sub
 End Class

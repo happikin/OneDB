@@ -28,6 +28,7 @@ Partial Class Form2
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Button8 = New System.Windows.Forms.Button()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.Panel3 = New System.Windows.Forms.Panel()
@@ -78,6 +79,7 @@ Partial Class Form2
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.Color.Black
+        Me.Panel2.Controls.Add(Me.Button8)
         Me.Panel2.Controls.Add(Me.Button7)
         Me.Panel2.Controls.Add(Me.ComboBox1)
         Me.Panel2.Controls.Add(Me.Panel3)
@@ -88,8 +90,23 @@ Partial Class Form2
         Me.Panel2.Controls.Add(Me.Button2)
         Me.Panel2.Location = New System.Drawing.Point(12, 51)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(200, 448)
+        Me.Panel2.Size = New System.Drawing.Size(200, 479)
         Me.Panel2.TabIndex = 3
+        '
+        'Button8
+        '
+        Me.Button8.BackColor = System.Drawing.Color.Black
+        Me.Button8.FlatAppearance.BorderSize = 0
+        Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button8.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.Button8.ForeColor = System.Drawing.Color.Teal
+        Me.Button8.Location = New System.Drawing.Point(0, 270)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(198, 52)
+        Me.Button8.TabIndex = 12
+        Me.Button8.Text = "Find"
+        Me.Button8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button8.UseVisualStyleBackColor = False
         '
         'Button7
         '
@@ -109,7 +126,7 @@ Partial Class Form2
         'ComboBox1
         '
         Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(12, 23)
+        Me.ComboBox1.Location = New System.Drawing.Point(12, 13)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(175, 33)
         Me.ComboBox1.TabIndex = 10
@@ -117,7 +134,7 @@ Partial Class Form2
         'Panel3
         '
         Me.Panel3.BackColor = System.Drawing.Color.Teal
-        Me.Panel3.Location = New System.Drawing.Point(12, 305)
+        Me.Panel3.Location = New System.Drawing.Point(12, 328)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(175, 1)
         Me.Panel3.TabIndex = 9
@@ -129,7 +146,7 @@ Partial Class Form2
         Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button5.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.Button5.ForeColor = System.Drawing.Color.Teal
-        Me.Button5.Location = New System.Drawing.Point(1, 365)
+        Me.Button5.Location = New System.Drawing.Point(1, 388)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(198, 52)
         Me.Button5.TabIndex = 4
@@ -144,7 +161,7 @@ Partial Class Form2
         Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button6.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.Button6.ForeColor = System.Drawing.Color.Teal
-        Me.Button6.Location = New System.Drawing.Point(1, 316)
+        Me.Button6.Location = New System.Drawing.Point(1, 339)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(198, 52)
         Me.Button6.TabIndex = 3
@@ -288,7 +305,7 @@ Partial Class Form2
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersWidth = 62
         Me.DataGridView1.RowTemplate.Height = 33
-        Me.DataGridView1.Size = New System.Drawing.Size(1254, 583)
+        Me.DataGridView1.Size = New System.Drawing.Size(1255, 583)
         Me.DataGridView1.TabIndex = 10
         '
         'Form2
@@ -337,4 +354,5 @@ Partial Class Form2
     Friend WithEvents ComboBox1 As ComboBox
     Friend WithEvents Button7 As Button
     Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents Button8 As Button
 End Class
