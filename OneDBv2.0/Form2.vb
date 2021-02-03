@@ -3,7 +3,7 @@ Imports MySql.Data.MySqlClient
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
 Public Class Form2
-
+    Public dbname As String = "sakila"
     Dim sqlConn As New MySqlConnection
     Dim sqlCmd As New MySqlCommand
     Dim sqlDA As New MySqlDataAdapter
@@ -14,7 +14,7 @@ Public Class Form2
         Dim sqlDR As MySqlDataReader
         sqlDT.Clear()
         sqlConn.Close()
-        sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=sakila;"
+        sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=" + dbname + ";"
         sqlConn.Open()
         sqlCmd.Connection = sqlConn
         sqlCmd.CommandText = "select * from " + tableName
@@ -26,12 +26,12 @@ Public Class Form2
     End Sub
 
 
-    Public Sub fillComboBox()   'will fill the combobox with the list of all the tables in the database
+    Public Sub fillComboBox1()   'will fill the combobox with the list of all the tables in the database
         Dim sqlDT As New DataTable
         Dim sqlDR As MySqlDataReader
         sqlDT.Clear()
         sqlConn.Close()
-        sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=sakila;"
+        sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=" + dbname + ";"
         sqlCmd.Connection = sqlConn
         sqlConn.Open()
         sqlCmd.CommandText = "SHOW TABLES;"
@@ -56,7 +56,7 @@ Public Class Form2
     Public Sub showTables()
         Dim sqlDT As New DataTable
         Dim sqlDR As MySqlDataReader
-        sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=sakila;"
+        sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=" + dbname + ";"
         sqlCmd.Connection = sqlConn
         sqlConn.Open()
         sqlCmd.CommandText = "SHOW TABLES;"
@@ -71,10 +71,34 @@ Public Class Form2
         'MsgBox(DataGridView1.Rows(0).Cells(0).Value.ToString, 1, MsgBoxStyle.Information)
     End Sub
 
-
+    Public Sub showEditingPanel(ByVal bname As String)
+        Dim sqlDR As MySqlDataReader
+        Dim sqlCmd As New MySqlCommand
+        Dim DataTable As New DataTable
+        Dim sqlCon As New MySqlConnection("server=localhost;user id=root;password=Raina@1999;database=" + dbname + ";")
+        sqlCon.Open()
+        sqlCmd.Connection = sqlCon
+        If ComboBox2.SelectedIndex.ToString <> Nothing Then
+            sqlCmd.CommandText = "SELECT * FROM " + ComboBox1.SelectedItem + ";"
+            sqlDR = sqlCmd.ExecuteReader
+            DataTable.Load(sqlDR)
+            sqlCon.Close()
+            For index = 0 To DataTable.Columns.Count - 1
+                ComboBox2.Items.Add(DataTable.Columns(index).ColumnName)
+            Next
+            Panel2.Visible = False
+            Panel5.Visible = True
+            Button11.Text = bname
+            sqlDA.Dispose()
+            DataTable.Clear()
+            sqlDR.Dispose()
+        Else
+            MsgBox("Please select a table first", MsgBoxStyle.Information, "Alert")
+        End If
+    End Sub
     Public themeState As Integer '0 for Light Mode;1 for Dark Mode
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        Panel5.Visible = False
         'DataGridView1.GridColor = Color.Teal
         'DataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Sunken
 
@@ -112,15 +136,15 @@ Public Class Form2
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        Panel2.Visible = False
+        showEditingPanel("INSERT")
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        Panel2.Visible = False
+        ' showEditingPanel("DELETE", ComboBox2.SelectedItem)
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        Panel2.Visible = False
+        'showEditingPanel("UPDATE", ComboBox2.SelectedItem)
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs)
@@ -178,7 +202,7 @@ Public Class Form2
     End Sub
 
     Private Sub RefreshButton1_Click(sender As Object, e As EventArgs) Handles RefreshButton1.Click
-        fillComboBox()
+        fillComboBox1()
     End Sub
 
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
@@ -198,6 +222,21 @@ Public Class Form2
     End Sub
 
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        Button11.Text = "FIND"
+    End Sub
 
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
+        Panel5.Visible = False
+        ComboBox2.Items.Clear()
+        RichTextBox1.Clear()
+    End Sub
+
+    Private Sub Panel5_Paint(sender As Object, e As PaintEventArgs) Handles Panel5.Paint
+        Label5.Visible = False
+    End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+        RichTextBox1.Clear()
+        ComboBox2.SelectedIndex = -1
     End Sub
 End Class
