@@ -71,15 +71,16 @@ Public Class Form2
         'MsgBox(DataGridView1.Rows(0).Cells(0).Value.ToString, 1, MsgBoxStyle.Information)
     End Sub
 
-    Public Sub showEditingPanel(ByVal bname As String)
+    Public Sub showEditingPanel(ByVal bname As String) 'ByVal item As ComboBox.ObjectCollection)
         Dim sqlDR As MySqlDataReader
         Dim sqlCmd As New MySqlCommand
         Dim DataTable As New DataTable
         Dim sqlCon As New MySqlConnection("server=localhost;user id=root;password=Raina@1999;database=" + dbname + ";")
         sqlCon.Open()
         sqlCmd.Connection = sqlCon
-        If ComboBox2.SelectedIndex.ToString <> Nothing Then
-            sqlCmd.CommandText = "SELECT * FROM " + ComboBox1.SelectedItem + ";"
+
+        If ComboBox1.SelectedItem <> Nothing Then
+            sqlCmd.CommandText = "SELECT * FROM " + ComboBox1.SelectedItem.ToString + ";"
             sqlDR = sqlCmd.ExecuteReader
             DataTable.Load(sqlDR)
             sqlCon.Close()
@@ -95,6 +96,7 @@ Public Class Form2
         Else
             MsgBox("Please select a table first", MsgBoxStyle.Information, "Alert")
         End If
+
     End Sub
     Public themeState As Integer '0 for Light Mode;1 for Dark Mode
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -140,11 +142,11 @@ Public Class Form2
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        ' showEditingPanel("DELETE", ComboBox2.SelectedItem)
+        showEditingPanel("DELETE")
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        'showEditingPanel("UPDATE", ComboBox2.SelectedItem)
+        showEditingPanel("UPDATE")
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs)
