@@ -93,6 +93,7 @@ Public Class Form2
             sqlDA.Dispose()
             DataTable.Clear()
             sqlDR.Dispose()
+            sqlCon.Close()
         Else
             MsgBox("Please select a table first", MsgBoxStyle.Information, "Alert")
         End If
@@ -154,7 +155,7 @@ Public Class Form2
     End Sub
 
     Private Sub CloseButton1_Click(sender As Object, e As EventArgs) Handles RButton1.Click
-        'MessageBox.Show("Good Bye!", "!!", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
         End
     End Sub
 
@@ -214,7 +215,7 @@ Public Class Form2
             MsgBox("Please select a table name!", MsgBoxStyle.Information, "Message")
         End If
 
-        If DataGridView1.DisplayedColumnCount(True) * DataGridView1.Columns.GetColumnsWidth(DataGridViewElementStates.Resizable) < 1200 Then
+        If DataGridView1.Columns.Count < 5 Then
             DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
 
         Else
@@ -240,5 +241,9 @@ Public Class Form2
     Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
         RichTextBox1.Clear()
         ComboBox2.SelectedIndex = -1
+    End Sub
+
+    Private Sub Form2_MouseClick(sender As Object, e As MouseEventArgs) Handles MyBase.MouseClick
+        Panel2.Visible = False
     End Sub
 End Class
