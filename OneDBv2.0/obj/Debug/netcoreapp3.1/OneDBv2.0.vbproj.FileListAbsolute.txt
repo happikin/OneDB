@@ -1,0 +1,9 @@
+C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\netcoreapp3.1\OneDBv2.0.vbprojAssemblyReference.cache
+C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\netcoreapp3.1\OneDBv2._0.Form1.resources
+C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\netcoreapp3.1\OneDBv2._0.Form2.resources
+C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\netcoreapp3.1\OneDBv2._0.MainMDIContainder.resources
+C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\netcoreapp3.1\OneDBv2._0.Resources.resources
+C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\netcoreapp3.1\OneDBv2.0.vbproj.GenerateResource.cache
+C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\netcoreapp3.1\OneDBv2.0.AssemblyInfoInputs.cache
+C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\netcoreapp3.1\OneDBv2.0.AssemblyInfo.vb
+C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\netcoreapp3.1\OneDBv2.0.vbproj.CoreCompileInputs.cache

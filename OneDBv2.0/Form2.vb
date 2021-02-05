@@ -3,13 +3,15 @@ Imports MySql.Data.MySqlClient
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
 Public Class Form2
-    Public dbname As String = "sakila"
-    Dim sqlConn As New MySqlConnection
-    Dim sqlCmd As New MySqlCommand
-    Dim sqlDA As New MySqlDataAdapter
 
+    Public dbname As String = "sakila"
+    Public globalCounter = 0, globalIndex As Integer = 0
+    Public entryContainer() As entryItem
 
     Public Sub showData(ByVal tableName As String)
+        Dim sqlConn As New MySqlConnection
+        Dim sqlCmd As New MySqlCommand
+        Dim sqlDA As New MySqlDataAdapter
         Dim sqlDT As New DataTable
         Dim sqlDR As MySqlDataReader
         sqlDT.Clear()
@@ -27,6 +29,9 @@ Public Class Form2
 
 
     Public Sub fillComboBox1()   'will fill the combobox with the list of all the tables in the database
+        Dim sqlConn As New MySqlConnection
+        Dim sqlCmd As New MySqlCommand
+        Dim sqlDA As New MySqlDataAdapter
         Dim sqlDT As New DataTable
         Dim sqlDR As MySqlDataReader
         sqlDT.Clear()
@@ -54,6 +59,9 @@ Public Class Form2
         sqlDT.Clear()
     End Sub
     Public Sub showTables()
+        Dim sqlConn As New MySqlConnection
+        Dim sqlCmd As New MySqlCommand
+        Dim sqlDA As New MySqlDataAdapter
         Dim sqlDT As New DataTable
         Dim sqlDR As MySqlDataReader
         sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=" + dbname + ";"
@@ -72,6 +80,7 @@ Public Class Form2
     End Sub
 
     Public Sub showEditingPanel(ByVal bname As String) 'ByVal item As ComboBox.ObjectCollection)
+        Dim sqlDA As New MySqlDataAdapter
         Dim sqlDR As MySqlDataReader
         Dim sqlCmd As New MySqlCommand
         Dim DataTable As New DataTable
@@ -94,11 +103,39 @@ Public Class Form2
             DataTable.Clear()
             sqlDR.Dispose()
             sqlCon.Close()
+            Button11.Enabled = False
+
         Else
             MsgBox("Please select a table first", MsgBoxStyle.Information, "Alert")
         End If
 
     End Sub
+
+    Public Sub fillComboBox2()  'is supposed to be called from the reset button
+        Dim sqlDA As New MySqlDataAdapter
+        Dim sqlDR As MySqlDataReader
+        Dim sqlCmd As New MySqlCommand
+        Dim DataTable As New DataTable
+        Dim sqlCon As New MySqlConnection("server=localhost;user id=root;password=Raina@1999;database=" + dbname + ";")
+        sqlCon.Open()
+        sqlCmd.Connection = sqlCon
+
+        If ComboBox1.SelectedItem <> Nothing Then
+            sqlCmd.CommandText = "SELECT * FROM " + ComboBox1.SelectedItem.ToString + ";"
+            sqlDR = sqlCmd.ExecuteReader
+            DataTable.Load(sqlDR)
+            sqlCon.Close()
+            For index = 0 To DataTable.Columns.Count - 1
+                ComboBox2.Items.Add(DataTable.Columns(index).ColumnName)
+            Next
+            sqlDA.Dispose()
+            DataTable.Clear()
+            sqlDR.Dispose()
+            sqlCon.Close()
+        End If
+
+    End Sub
+
     Public themeState As Integer '0 for Light Mode;1 for Dark Mode
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Panel5.Visible = False
@@ -235,15 +272,82 @@ Public Class Form2
     End Sub
 
     Private Sub Panel5_Paint(sender As Object, e As PaintEventArgs) Handles Panel5.Paint
-        Label5.Visible = False
+        If Panel5.Visible = True Then
+            '    Dim sqlCmd As New MySqlCommand
+            '    Dim sqlDA As New MySqlDataAdapter
+            '    Dim sqlDT As New DataTable
+            '    Dim sqlDR As MySqlDataReader
+            '    Dim sqlCon As New MySqlConnection("server=localhost;user id=root;password=Raina@1999;database=" + dbname + ";")
+            '    sqlCon.Open()
+            '    sqlCmd.Connection = sqlCon
+
+            '    sqlCmd.Parameters.AddWithValue(ComboBox2.SelectedItem.ToString, ComboBox2.SelectedValue)
+
+            '    sqlCon.Close()
+            ReDim Preserve entryContainer(ComboBox2.Items.Count)     'will automatically create array of objects to contain max possible
+        End If
+
     End Sub
 
     Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+        globalCounter = 0
         RichTextBox1.Clear()
         ComboBox2.SelectedIndex = -1
+        fillComboBox2()
     End Sub
 
     Private Sub Form2_MouseClick(sender As Object, e As MouseEventArgs) Handles MyBase.MouseClick
         Panel2.Visible = False
+    End Sub
+
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
+
+        If RichTextBox1.Text IsNot " " And ComboBox2.SelectedItem IsNot Nothing Then
+            ComboBox2.Items.Remove(ComboBox2.SelectedItem)  'will remove the initialized column name from the drop down list
+            RichTextBox1.Clear()
+            entryContainer(globalCounter) = New entryItem(ComboBox2.SelectedItem, RichTextBox1.Text)
+            globalCounter = globalCounter + 1
+            Button11.Enabled = True
+        Else
+            TextBox1.Text = "Please recheck the selections!"
+            Timer2.Start()
+        End If
+    End Sub
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        TextBox1.Clear()
+        Timer2.Stop()
+    End Sub
+
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
+        Dim sqlCmd As New MySqlCommand
+        'sqlCmd.Parameters.AddWithValue("@column1", ComboBox2.SelectedItem)
+        'sqlCmd.Parameters.AddWithValue("@column1", ComboBox2.SelectedItem)
+        'sqlCmd.Parameters.AddWithValue("@column1", ComboBox2.SelectedItem)
+        Dim tbname = ComboBox1.SelectedItem.ToString, query As String
+
+        If globalCounter = ComboBox2.Items.Count Then
+            'PUT THE MODIFIED COE HERE WITH THE INSERT INTO TABLE VALUE(-----) type
+        End If
+
+        query = Button11.Text + " INTO " + tbname + "(" + entryContainer(0).getColName
+        globalIndex += 1
+        If entryContainer(globalIndex) IsNot Nothing Then
+
+            For index = 1 To globalCounter - 1
+                query = query + "," + entryContainer(index).getColName
+            Next
+            query = query + ") values(" + entryContainer(0).getValue
+            For index = 1 To globalCounter - 1
+                query = query + "," + entryContainer(index).getValue
+            Next
+            query = query + ");"
+
+        End If
+        MsgBox(query, 1, "")
+
+        'sqlCmd.Parameters.AddRange(entryContainer)
+        'sqlCmd.CommandText = "insert into " + ComboBox1.SelectedItem.ToString + "values(@column1);"
+
     End Sub
 End Class
