@@ -302,12 +302,12 @@ Public Class Form2
 
     Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
 
-        If RichTextBox1.Text IsNot " " And ComboBox2.SelectedItem IsNot Nothing Then
-            ComboBox2.Items.Remove(ComboBox2.SelectedItem)  'will remove the initialized column name from the drop down list
-            RichTextBox1.Clear()
+        If ComboBox2.SelectedItem IsNot Nothing Then
             entryContainer(globalCounter) = New entryItem(ComboBox2.SelectedItem, RichTextBox1.Text)
             globalCounter = globalCounter + 1
             Button11.Enabled = True
+            ComboBox2.Items.Remove(ComboBox2.SelectedItem)  'will remove the initialized column name from the drop down list
+            RichTextBox1.Clear()
         Else
             TextBox1.Text = "Please recheck the selections!"
             Timer2.Start()
