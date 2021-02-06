@@ -60,7 +60,7 @@ Partial Class Form2
         Me.Panel2.SuspendLayout()
         Me.Panel4.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel5.SuspendLayout()
+        Me.Panel5.SuspendLayout
         Me.SuspendLayout()
         '
         'Panel1
@@ -515,7 +515,7 @@ Partial Class Form2
         Me.Panel4.PerformLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel5.ResumeLayout(False)
-        Me.Panel5.PerformLayout()
+        Me.Panel5.PerformLayout
         Me.ResumeLayout(False)
 
     End Sub

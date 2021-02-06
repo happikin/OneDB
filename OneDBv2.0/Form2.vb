@@ -5,7 +5,7 @@ Imports Microsoft.Win32
 Public Class Form2
 
     Public dbname As String = "sakila"
-    Public globalCounter = 0, globalIndex As Integer = 0
+    Public globalCounter = -1, globalIndex As Integer = 0
     Public entryContainer() As entryItem
 
     Public Sub showData(ByVal tableName As String)
@@ -267,8 +267,13 @@ Public Class Form2
 
     Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
         Panel5.Visible = False
-        ComboBox2.Items.Clear()
+        globalCounter = 0
         RichTextBox1.Clear()
+        ComboBox2.Items.Clear()
+        ComboBox2.ResetText()
+        Button10.Enabled = True
+        ComboBox2.Enabled = True
+        RichTextBox1.Enabled = True
     End Sub
 
     Private Sub Panel5_Paint(sender As Object, e As PaintEventArgs) Handles Panel5.Paint
@@ -284,7 +289,6 @@ Public Class Form2
             '    sqlCmd.Parameters.AddWithValue(ComboBox2.SelectedItem.ToString, ComboBox2.SelectedValue)
 
             '    sqlCon.Close()
-            ReDim Preserve entryContainer(ComboBox2.Items.Count)     'will automatically create array of objects to contain max possible
         End If
 
     End Sub
@@ -293,7 +297,12 @@ Public Class Form2
         globalCounter = 0
         RichTextBox1.Clear()
         ComboBox2.SelectedIndex = -1
+        ComboBox2.Items.Clear()
+        ComboBox2.ResetText()
         fillComboBox2()
+        Button10.Enabled = True
+        ComboBox2.Enabled = True
+        RichTextBox1.Enabled = True
     End Sub
 
     Private Sub Form2_MouseClick(sender As Object, e As MouseEventArgs) Handles MyBase.MouseClick
@@ -303,11 +312,17 @@ Public Class Form2
     Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
 
         If ComboBox2.SelectedItem IsNot Nothing Then
-            entryContainer(globalCounter) = New entryItem(ComboBox2.SelectedItem, RichTextBox1.Text)
             globalCounter = globalCounter + 1
+            entryContainer(globalCounter) = New entryItem(ComboBox2.SelectedItem, RichTextBox1.Text)
             Button11.Enabled = True
             ComboBox2.Items.Remove(ComboBox2.SelectedItem)  'will remove the initialized column name from the drop down list
             RichTextBox1.Clear()
+            If ComboBox2.Items.Count = 0 Then
+                ComboBox2.Enabled = False
+                RichTextBox1.Enabled = False
+                TextBox1.Text = "Please build the query."
+                Button10.Enabled = False
+            End If
         Else
             TextBox1.Text = "Please recheck the selections!"
             Timer2.Start()
@@ -319,32 +334,46 @@ Public Class Form2
         Timer2.Stop()
     End Sub
 
+
+    Private Sub Panel5_Enter(sender As Object, e As EventArgs) Handles Panel5.Enter
+        ReDim entryContainer(ComboBox2.Items.Count)     'will automatically create array of objects to contain max possible
+    End Sub
+
     Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
         Dim sqlCmd As New MySqlCommand
-        'sqlCmd.Parameters.AddWithValue("@column1", ComboBox2.SelectedItem)
-        'sqlCmd.Parameters.AddWithValue("@column1", ComboBox2.SelectedItem)
-        'sqlCmd.Parameters.AddWithValue("@column1", ComboBox2.SelectedItem)
         Dim tbname = ComboBox1.SelectedItem.ToString, query As String
 
         If globalCounter = ComboBox2.Items.Count Then
             'PUT THE MODIFIED COE HERE WITH THE INSERT INTO TABLE VALUE(-----) type
         End If
 
-        query = Button11.Text + " INTO " + tbname + "(" + entryContainer(0).getColName
-        globalIndex += 1
         If entryContainer(globalIndex) IsNot Nothing Then
+            query = Button11.Text + " INTO " + tbname + "(" + entryContainer(0).getColName
 
-            For index = 1 To globalCounter - 1
-                query = query + "," + entryContainer(index).getColName
+            'globalIndex += 1
+
+            For index = 1 To globalCounter
+
+                If entryContainer(index) IsNot Nothing Then
+                    query = query + "," + entryContainer(index).getColName
+                Else
+                    Exit For
+                End If
+
             Next
-            query = query + ") values(" + entryContainer(0).getValue
-            For index = 1 To globalCounter - 1
-                query = query + "," + entryContainer(index).getValue
+
+            query = query + ") VALUES(" + entryContainer(0).getValue
+
+            For index = 1 To globalCounter
+                If entryContainer(index) IsNot Nothing Then
+                    query = query + "," + entryContainer(index).getValue
+                Else
+                    Exit For
+                End If
             Next
             query = query + ");"
-
+            MsgBox(query, 1, "")
         End If
-        MsgBox(query, 1, "")
 
         'sqlCmd.Parameters.AddRange(entryContainer)
         'sqlCmd.CommandText = "insert into " + ComboBox1.SelectedItem.ToString + "values(@column1);"
