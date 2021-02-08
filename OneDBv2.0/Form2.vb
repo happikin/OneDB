@@ -4,10 +4,16 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
 Public Class Form2
 
+    Public Structure connCredentials
+        Dim server, uid, pswd, db As String
+    End Structure
+    Public TypeFieldArrayCount As Integer
+    Public conOne As connCredentials
+    Public themeState As Integer '0 for Light Mode;1 for Dark Mode
     Public dbname As String = "sakila"
     Public globalCounter = -1, globalIndex As Integer = 0
     Public entryContainer() As entryItem
-
+    Public TypeFieldArray() As entryItem
     Public Sub showData(ByVal tableName As String)
         Dim sqlConn As New MySqlConnection
         Dim sqlCmd As New MySqlCommand
@@ -16,7 +22,7 @@ Public Class Form2
         Dim sqlDR As MySqlDataReader
         sqlDT.Clear()
         sqlConn.Close()
-        sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=" + dbname + ";"
+        sqlConn.ConnectionString = "server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";"
         sqlConn.Open()
         sqlCmd.Connection = sqlConn
         sqlCmd.CommandText = "select * from " + tableName
@@ -27,7 +33,6 @@ Public Class Form2
         DataGridView1.DataSource = sqlDT
     End Sub
 
-
     Public Sub fillComboBox1()   'will fill the combobox with the list of all the tables in the database
         Dim sqlConn As New MySqlConnection
         Dim sqlCmd As New MySqlCommand
@@ -36,7 +41,7 @@ Public Class Form2
         Dim sqlDR As MySqlDataReader
         sqlDT.Clear()
         sqlConn.Close()
-        sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=" + dbname + ";"
+        sqlConn.ConnectionString = "server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";"
         sqlCmd.Connection = sqlConn
         sqlConn.Open()
         sqlCmd.CommandText = "SHOW TABLES;"
@@ -58,13 +63,41 @@ Public Class Form2
         Next
         sqlDT.Clear()
     End Sub
+
+    Public Sub fillComboBox2()  'is supposed to be called from the reset button
+        Dim sqlDA As New MySqlDataAdapter
+        Dim sqlDR As MySqlDataReader
+        Dim sqlCmd As New MySqlCommand
+        Dim DataTable As New DataTable
+        Dim sqlCon As New MySqlConnection("server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";")
+        sqlCon.Open()
+        sqlCmd.Connection = sqlCon
+
+        If ComboBox1.SelectedItem <> Nothing Then
+            sqlCmd.CommandText = "SELECT * FROM " + ComboBox1.SelectedItem.ToString + ";"
+            sqlDR = sqlCmd.ExecuteReader
+            DataTable.Load(sqlDR)
+            sqlCon.Close()
+
+            For index = 0 To TypeFieldArrayCount - 1
+                ComboBox2.Items.Add(DataTable.Columns(index).ColumnName)
+            Next
+
+            sqlDA.Dispose()
+            DataTable.Clear()
+            sqlDR.Dispose()
+            sqlCon.Close()
+        End If
+
+    End Sub
+
     Public Sub showTables()
         Dim sqlConn As New MySqlConnection
         Dim sqlCmd As New MySqlCommand
         Dim sqlDA As New MySqlDataAdapter
         Dim sqlDT As New DataTable
         Dim sqlDR As MySqlDataReader
-        sqlConn.ConnectionString = "server=localhost;user id=root;password=Raina@1999;database=" + dbname + ";"
+        sqlConn.ConnectionString = "server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";"
         sqlCmd.Connection = sqlConn
         sqlConn.Open()
         sqlCmd.CommandText = "SHOW TABLES;"
@@ -84,7 +117,7 @@ Public Class Form2
         Dim sqlDR As MySqlDataReader
         Dim sqlCmd As New MySqlCommand
         Dim DataTable As New DataTable
-        Dim sqlCon As New MySqlConnection("server=localhost;user id=root;password=Raina@1999;database=" + dbname + ";")
+        Dim sqlCon As New MySqlConnection("server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";")
         sqlCon.Open()
         sqlCmd.Connection = sqlCon
 
@@ -93,8 +126,13 @@ Public Class Form2
             sqlDR = sqlCmd.ExecuteReader
             DataTable.Load(sqlDR)
             sqlCon.Close()
-            For index = 0 To DataTable.Columns.Count - 1
+            TypeFieldArrayCount = DataTable.Columns.Count
+            ReDim TypeFieldArray(TypeFieldArrayCount) 'will init declare the array size as the noumber of columns in the table
+
+            For index = 0 To TypeFieldArrayCount - 1
                 ComboBox2.Items.Add(DataTable.Columns(index).ColumnName)
+                TypeFieldArray(index) = New entryItem(DataTable.Columns(index).ColumnName, DataTable.Columns(index).DataType.ToString)
+                MsgBox(TypeFieldArray(index).getFieldType, 1, " ")
             Next
             Panel2.Visible = False
             Panel5.Visible = True
@@ -111,37 +149,25 @@ Public Class Form2
 
     End Sub
 
-    Public Sub fillComboBox2()  'is supposed to be called from the reset button
-        Dim sqlDA As New MySqlDataAdapter
-        Dim sqlDR As MySqlDataReader
-        Dim sqlCmd As New MySqlCommand
-        Dim DataTable As New DataTable
-        Dim sqlCon As New MySqlConnection("server=localhost;user id=root;password=Raina@1999;database=" + dbname + ";")
-        sqlCon.Open()
-        sqlCmd.Connection = sqlCon
-
-        If ComboBox1.SelectedItem <> Nothing Then
-            sqlCmd.CommandText = "SELECT * FROM " + ComboBox1.SelectedItem.ToString + ";"
-            sqlDR = sqlCmd.ExecuteReader
-            DataTable.Load(sqlDR)
-            sqlCon.Close()
-            For index = 0 To DataTable.Columns.Count - 1
-                ComboBox2.Items.Add(DataTable.Columns(index).ColumnName)
-            Next
-            sqlDA.Dispose()
-            DataTable.Clear()
-            sqlDR.Dispose()
-            sqlCon.Close()
-        End If
-
+    Public Sub resetEditingPanel()
+        Panel5.Visible = False
+        globalCounter = 0
+        RichTextBox1.Clear()
+        ComboBox2.Items.Clear()
+        ComboBox2.ResetText()
+        Button10.Enabled = True
+        ComboBox2.Enabled = True
+        RichTextBox1.Enabled = True
+        TypeFieldArrayCount = 0
+        globalCounter = -1
+        globalIndex = 0
     End Sub
 
-    Public themeState As Integer '0 for Light Mode;1 for Dark Mode
+
+
+
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Panel5.Visible = False
-        'DataGridView1.GridColor = Color.Teal
-        'DataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Sunken
-
         themeState = 0
         Panel2.BringToFront()
         Button7.BackColor = Color.White
@@ -158,6 +184,10 @@ Public Class Form2
         Panel2.Visible = False
         Timer1.Interval = 3000
         Timer1.Start()
+        conOne.server = "localhost"
+        conOne.uid = "root"
+        conOne.pswd = "Raina@1999"
+        conOne.db = "demo"
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
@@ -266,14 +296,7 @@ Public Class Form2
     End Sub
 
     Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
-        Panel5.Visible = False
-        globalCounter = 0
-        RichTextBox1.Clear()
-        ComboBox2.Items.Clear()
-        ComboBox2.ResetText()
-        Button10.Enabled = True
-        ComboBox2.Enabled = True
-        RichTextBox1.Enabled = True
+        resetEditingPanel()
     End Sub
 
     Private Sub Panel5_Paint(sender As Object, e As PaintEventArgs) Handles Panel5.Paint
@@ -303,6 +326,9 @@ Public Class Form2
         Button10.Enabled = True
         ComboBox2.Enabled = True
         RichTextBox1.Enabled = True
+        TypeFieldArrayCount = 0
+        globalCounter = -1
+        globalIndex = 0
     End Sub
 
     Private Sub Form2_MouseClick(sender As Object, e As MouseEventArgs) Handles MyBase.MouseClick
@@ -313,7 +339,24 @@ Public Class Form2
 
         If ComboBox2.SelectedItem IsNot Nothing Then
             globalCounter = globalCounter + 1
-            entryContainer(globalCounter) = New entryItem(ComboBox2.SelectedItem, RichTextBox1.Text)
+            entryContainer(globalCounter) = New entryItem(ComboBox2.SelectedItem, RichTextBox1.Text, " ")
+
+            '//----------------------------------------------------------------------//
+            'Now we must find the corresponding type from the previously made type-field array and init the respective objects' typevalue
+            For index = 0 To TypeFieldArrayCount - 1
+                If entryContainer(globalCounter).getColName = TypeFieldArray(index).getColName Then
+                    entryContainer(globalCounter).setFieldType(TypeFieldArray(index).getFieldType)
+
+                End If
+            Next
+            'Now we have all our columns with their types and data in a single object
+            '//----------------------------------------------------------------------//
+
+
+            '//--- Here will be the code to implicitly parse the value intp the suitable one----//
+            entryContainer(globalCounter).parseValue()
+            '//---------------------------------------------------------------------------------//'
+
             Button11.Enabled = True
             ComboBox2.Items.Remove(ComboBox2.SelectedItem)  'will remove the initialized column name from the drop down list
             RichTextBox1.Clear()
@@ -340,13 +383,13 @@ Public Class Form2
     End Sub
 
     Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
-        Dim sqlCmd As New MySqlCommand
-        Dim tbname = ComboBox1.SelectedItem.ToString, query As String
-
+        Dim tbname As String = ComboBox1.SelectedItem.ToString
+        Dim query As String
         If globalCounter = ComboBox2.Items.Count Then
             'PUT THE MODIFIED COE HERE WITH THE INSERT INTO TABLE VALUE(-----) type
         End If
 
+        '//----First we develop an iterative mechanism for building a query from user input----//
         If entryContainer(globalIndex) IsNot Nothing Then
             query = Button11.Text + " INTO " + tbname + "(" + entryContainer(0).getColName
 
@@ -372,8 +415,25 @@ Public Class Form2
                 End If
             Next
             query = query + ");"
-            MsgBox(query, 1, "")
+            Dim a As String = entryContainer(1).getFieldType()
+            MsgBox(query, 1, a)
+            If MsgBoxResult.Ok Then
+
+                '//---- Now we attemt to actually insert into the table----//'
+                Dim sqlConn As New MySqlConnection
+                Dim sqlCmd As New MySqlCommand
+                sqlConn.ConnectionString = "server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";"
+                sqlCmd.Connection = sqlConn
+                sqlConn.Open()
+                sqlCmd.CommandText = query
+                sqlCmd.ExecuteNonQuery()
+                sqlConn.Close()
+                resetEditingPanel()
+            End If
         End If
+
+
+        'MsgBox(DataGridView1.Rows(0).Cells(0).Value.ToString, 1, MsgBoxStyle.Information)
 
         'sqlCmd.Parameters.AddRange(entryContainer)
         'sqlCmd.CommandText = "insert into " + ComboBox1.SelectedItem.ToString + "values(@column1);"
