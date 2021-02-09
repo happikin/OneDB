@@ -31,6 +31,13 @@ Public Class Form2
         sqlDR.Close()
         sqlConn.Close()
         DataGridView1.DataSource = sqlDT
+
+        If DataGridView1.Columns.Count < 5 Then
+            DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+
+        Else
+            DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+        End If
     End Sub
 
     Public Sub fillComboBox1()   'will fill the combobox with the list of all the tables in the database
@@ -101,15 +108,11 @@ Public Class Form2
         sqlCmd.Connection = sqlConn
         sqlConn.Open()
         sqlCmd.CommandText = "SHOW TABLES;"
-        'qlCmd.ExecuteNonQuery()
         sqlDR = sqlCmd.ExecuteReader
         sqlDT.Load(sqlDR)
         sqlDR.Close()
-        'DataGridView1.DataSource = sqlDT
-        'sqlCmd.Parameters.Clear()
         sqlConn.Close()
         sqlDT.Clear()
-        'MsgBox(DataGridView1.Rows(0).Cells(0).Value.ToString, 1, MsgBoxStyle.Information)
     End Sub
 
     Public Sub showEditingPanel(ByVal bname As String) 'ByVal item As ComboBox.ObjectCollection)
@@ -132,6 +135,7 @@ Public Class Form2
             For index = 0 To TypeFieldArrayCount - 1
                 ComboBox2.Items.Add(DataTable.Columns(index).ColumnName)
                 TypeFieldArray(index) = New entryItem(DataTable.Columns(index).ColumnName, DataTable.Columns(index).DataType.ToString)
+                'TypeFieldArray(index).getConstraint(DataTable.Constraints(index)," ")
                 MsgBox(TypeFieldArray(index).getFieldType, 1, " ")
             Next
             Panel2.Visible = False
@@ -207,10 +211,23 @@ Public Class Form2
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         showEditingPanel("INSERT")
+        Button11.Location = New Point(250, 358)
+        Button10.Visible = True
+        Button10.Enabled = True
+        Button10.Location = New Point(80, 358)
+        Button12.Location = New Point(149, 358)
+        Button12.Size = New Size(81, 34)
+        Button11.Enabled = True
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         showEditingPanel("DELETE")
+        Button11.Location = New Point(80, 358)
+        Button10.Visible = False
+        Button10.Enabled = False
+        Button12.Location = New Point(250, 358)
+        Button12.Size = New Size(142, 34)
+        Button11.Enabled = True
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
@@ -282,12 +299,7 @@ Public Class Form2
             MsgBox("Please select a table name!", MsgBoxStyle.Information, "Message")
         End If
 
-        If DataGridView1.Columns.Count < 5 Then
-            DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
 
-        Else
-            DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-        End If
         Panel2.Visible = False
     End Sub
 
@@ -338,6 +350,9 @@ Public Class Form2
     Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
 
         If ComboBox2.SelectedItem IsNot Nothing Then
+            If RichTextBox1.Text.Equals(" ") Then
+                MsgBox("Text Box is Empty, Enter some value", 1, "ALERT!")
+            End If
             globalCounter = globalCounter + 1
             entryContainer(globalCounter) = New entryItem(ComboBox2.SelectedItem, RichTextBox1.Text, " ")
 
@@ -385,58 +400,89 @@ Public Class Form2
     Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
         Dim tbname As String = ComboBox1.SelectedItem.ToString
         Dim query As String
-        If globalCounter = ComboBox2.Items.Count Then
-            'PUT THE MODIFIED COE HERE WITH THE INSERT INTO TABLE VALUE(-----) type
-        End If
-
-        '//----First we develop an iterative mechanism for building a query from user input----//
-        If entryContainer(globalIndex) IsNot Nothing Then
-            query = Button11.Text + " INTO " + tbname + "(" + entryContainer(0).getColName
-
-            'globalIndex += 1
-
-            For index = 1 To globalCounter
-
-                If entryContainer(index) IsNot Nothing Then
-                    query = query + "," + entryContainer(index).getColName
-                Else
-                    Exit For
+        Select Case (Button11.Text)
+            Case "INSERT"
+                If globalCounter = ComboBox2.Items.Count Then
+                    'PUT THE MODIFIED COE HERE WITH THE INSERT INTO TABLE VALUE(-----) type
                 End If
+                '//----First we develop an iterative mechanism for building a query from user input----//
+                If entryContainer(globalIndex) IsNot Nothing Then
+                    query = Button11.Text + " INTO " + tbname + "(" + entryContainer(0).getColName
+                    'globalIndex += 1
+                    For index = 1 To globalCounter
 
-            Next
+                        If entryContainer(index) IsNot Nothing Then
+                            query = query + "," + entryContainer(index).getColName
+                        Else
+                            Exit For
+                        End If
 
-            query = query + ") VALUES(" + entryContainer(0).getValue
+                    Next
 
-            For index = 1 To globalCounter
-                If entryContainer(index) IsNot Nothing Then
-                    query = query + "," + entryContainer(index).getValue
-                Else
-                    Exit For
+                    query = query + ") VALUES(" + entryContainer(0).getValue
+
+                    For index = 1 To globalCounter
+                        If entryContainer(index) IsNot Nothing Then
+                            query = query + "," + entryContainer(index).getValue
+                        Else
+                            Exit For
+                        End If
+                    Next
+                    query = query + ");"
+                    'Dim a As String = entryContainer(1).getFieldType()
+                    MsgBox(query, 1, "Final Query")
+                    If MsgBoxResult.Ok Then
+                        '//---- Now we attemt to actually insert into the table----//'
+                        Dim sqlConn As New MySqlConnection
+                        Dim sqlCmd As New MySqlCommand
+                        sqlConn.ConnectionString = "server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";"
+                        sqlCmd.Connection = sqlConn
+                        sqlConn.Open()
+                        sqlCmd.CommandText = query
+                        Try
+                            sqlCmd.ExecuteNonQuery()
+                        Catch ex As Exception
+                            MsgBox(ex.Message, MsgBoxStyle.OkOnly, "Caution!")
+                            Exit Sub
+                        End Try
+                        sqlConn.Close()
+                        resetEditingPanel()
+                        showData(ComboBox1.SelectedItem.ToString)
+                    End If
                 End If
-            Next
-            query = query + ");"
-            Dim a As String = entryContainer(1).getFieldType()
-            MsgBox(query, 1, a)
-            If MsgBoxResult.Ok Then
-
-                '//---- Now we attemt to actually insert into the table----//'
-                Dim sqlConn As New MySqlConnection
-                Dim sqlCmd As New MySqlCommand
-                sqlConn.ConnectionString = "server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";"
-                sqlCmd.Connection = sqlConn
-                sqlConn.Open()
-                sqlCmd.CommandText = query
-                sqlCmd.ExecuteNonQuery()
-                sqlConn.Close()
-                resetEditingPanel()
-            End If
-        End If
-
-
-        'MsgBox(DataGridView1.Rows(0).Cells(0).Value.ToString, 1, MsgBoxStyle.Information)
-
-        'sqlCmd.Parameters.AddRange(entryContainer)
-        'sqlCmd.CommandText = "insert into " + ComboBox1.SelectedItem.ToString + "values(@column1);"
-
+            Case "DELETE"
+                'we can also provide a choice pane to select from which 
+                'type of consition clause must be chosen
+                'like:-
+                'o Where clause
+                'o
+                'o
+                If ComboBox2.SelectedItem IsNot Nothing Then
+                    query = "DELETE " & " FROM " & tbname & " WHERE " & ComboBox2.SelectedItem.ToString & " LIKE " _
+                        & ControlChars.Quote & RichTextBox1.Text & ControlChars.Quote & ";"
+                    MsgBox(query, 1, "Final Query")
+                    If MsgBoxResult.Ok = 1 Then
+                        '//---- Now we attemt to actually insert into the table----//'
+                        Dim sqlConn As New MySqlConnection
+                        Dim sqlCmd As New MySqlCommand
+                        sqlConn.ConnectionString = "server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";"
+                        sqlCmd.Connection = sqlConn
+                        sqlConn.Open()
+                        sqlCmd.CommandText = query
+                        Try
+                            sqlCmd.ExecuteNonQuery()
+                        Catch ex As Exception
+                            MsgBox(ex.Message, MsgBoxStyle.OkOnly, "Caution!")
+                            Exit Sub
+                        End Try
+                        sqlConn.Close()
+                        resetEditingPanel()
+                        showData(ComboBox1.SelectedItem.ToString)
+                    End If
+                End If
+            Case "UPDATE"
+            Case "CREATE"
+        End Select
     End Sub
+
 End Class

@@ -2,6 +2,7 @@
     Private colName As String
     Private value As Object
     Private fieldType As String
+    Private constraint As String
 
 
     Public Sub New(ByVal a As String, ByVal b As String, Optional ByVal c As String = " ") 'Instantiation for entryContainer

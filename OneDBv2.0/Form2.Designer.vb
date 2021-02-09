@@ -66,10 +66,10 @@ Partial Class Form2
         'Panel1
         '
         Me.Panel1.BackgroundImage = CType(resources.GetObject("Panel1.BackgroundImage"), System.Drawing.Image)
-        Me.Panel1.Location = New System.Drawing.Point(0, 610)
+        Me.Panel1.Location = New System.Drawing.Point(0, 626)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1280, 110)
+        Me.Panel1.Size = New System.Drawing.Size(1280, 94)
         Me.Panel1.TabIndex = 0
         Me.Panel1.Visible = False
         '
