@@ -45,6 +45,15 @@ Partial Class Form2
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.Panel8 = New System.Windows.Forms.Panel()
+        Me.RichTextBox2 = New System.Windows.Forms.RichTextBox()
+        Me.Panel9 = New System.Windows.Forms.Panel()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Button13 = New System.Windows.Forms.Button()
+        Me.Button14 = New System.Windows.Forms.Button()
+        Me.Panel10 = New System.Windows.Forms.Panel()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.ComboBox3 = New System.Windows.Forms.ComboBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Button12 = New System.Windows.Forms.Button()
         Me.Button11 = New System.Windows.Forms.Button()
@@ -61,6 +70,7 @@ Partial Class Form2
         Me.Panel4.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel5.SuspendLayout()
+        Me.Panel8.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
@@ -359,6 +369,111 @@ Partial Class Form2
         Me.Panel5.Size = New System.Drawing.Size(465, 444)
         Me.Panel5.TabIndex = 0
         '
+        'Panel8
+        '
+        Me.Panel8.Controls.Add(Me.RichTextBox2)
+        Me.Panel8.Controls.Add(Me.Panel9)
+        Me.Panel8.Controls.Add(Me.Label5)
+        Me.Panel8.Controls.Add(Me.Button13)
+        Me.Panel8.Controls.Add(Me.Button14)
+        Me.Panel8.Controls.Add(Me.Panel10)
+        Me.Panel8.Controls.Add(Me.Label6)
+        Me.Panel8.Controls.Add(Me.ComboBox3)
+        Me.Panel8.Location = New System.Drawing.Point(892, 113)
+        Me.Panel8.Name = "Panel8"
+        Me.Panel8.Size = New System.Drawing.Size(464, 352)
+        Me.Panel8.TabIndex = 16
+        '
+        'RichTextBox2
+        '
+        Me.RichTextBox2.Location = New System.Drawing.Point(72, 195)
+        Me.RichTextBox2.Margin = New System.Windows.Forms.Padding(2)
+        Me.RichTextBox2.Name = "RichTextBox2"
+        Me.RichTextBox2.Size = New System.Drawing.Size(320, 63)
+        Me.RichTextBox2.TabIndex = 19
+        Me.RichTextBox2.Text = ""
+        '
+        'Panel9
+        '
+        Me.Panel9.BackgroundImage = CType(resources.GetObject("Panel9.BackgroundImage"), System.Drawing.Image)
+        Me.Panel9.Location = New System.Drawing.Point(80, 173)
+        Me.Panel9.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel9.Name = "Panel9"
+        Me.Panel9.Size = New System.Drawing.Size(230, 3)
+        Me.Panel9.TabIndex = 18
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.Label5.Location = New System.Drawing.Point(76, 141)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(201, 28)
+        Me.Label5.TabIndex = 17
+        Me.Label5.Text = "Enter Condition Value"
+        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Button13
+        '
+        Me.Button13.BackColor = System.Drawing.Color.Teal
+        Me.Button13.FlatAppearance.BorderSize = 0
+        Me.Button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button13.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.Button13.ForeColor = System.Drawing.Color.White
+        Me.Button13.Location = New System.Drawing.Point(240, 273)
+        Me.Button13.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button13.Name = "Button13"
+        Me.Button13.Size = New System.Drawing.Size(152, 34)
+        Me.Button13.TabIndex = 16
+        Me.Button13.Text = "OK"
+        Me.Button13.UseVisualStyleBackColor = False
+        '
+        'Button14
+        '
+        Me.Button14.BackColor = System.Drawing.Color.Transparent
+        Me.Button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button14.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.Button14.ForeColor = System.Drawing.Color.Teal
+        Me.Button14.Location = New System.Drawing.Point(80, 273)
+        Me.Button14.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button14.Name = "Button14"
+        Me.Button14.Size = New System.Drawing.Size(147, 34)
+        Me.Button14.TabIndex = 15
+        Me.Button14.Text = "Cancel"
+        Me.Button14.UseVisualStyleBackColor = False
+        '
+        'Panel10
+        '
+        Me.Panel10.BackgroundImage = CType(resources.GetObject("Panel10.BackgroundImage"), System.Drawing.Image)
+        Me.Panel10.Location = New System.Drawing.Point(76, 81)
+        Me.Panel10.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel10.Name = "Panel10"
+        Me.Panel10.Size = New System.Drawing.Size(240, 4)
+        Me.Panel10.TabIndex = 14
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.Label6.Location = New System.Drawing.Point(72, 49)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(229, 28)
+        Me.Label6.TabIndex = 13
+        Me.Label6.Text = "Select Condition Column"
+        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'ComboBox3
+        '
+        Me.ComboBox3.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ComboBox3.FormattingEnabled = True
+        Me.ComboBox3.Location = New System.Drawing.Point(72, 95)
+        Me.ComboBox3.Margin = New System.Windows.Forms.Padding(2)
+        Me.ComboBox3.Name = "ComboBox3"
+        Me.ComboBox3.Size = New System.Drawing.Size(320, 33)
+        Me.ComboBox3.TabIndex = 12
+        '
         'TextBox1
         '
         Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
@@ -496,6 +611,7 @@ Partial Class Form2
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(1280, 720)
+        Me.Controls.Add(Me.Panel8)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.Panel5)
         Me.Controls.Add(Me.RefreshButton1)
@@ -517,6 +633,8 @@ Partial Class Form2
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel5.ResumeLayout(False)
         Me.Panel5.PerformLayout()
+        Me.Panel8.ResumeLayout(False)
+        Me.Panel8.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -554,4 +672,13 @@ Partial Class Form2
     Friend WithEvents Label4 As Label
     Friend WithEvents TextBox1 As TextBox
     Friend WithEvents Timer2 As Timer
+    Friend WithEvents Panel8 As Panel
+    Friend WithEvents Panel10 As Panel
+    Friend WithEvents Label6 As Label
+    Friend WithEvents ComboBox3 As ComboBox
+    Friend WithEvents Button13 As Button
+    Friend WithEvents Button14 As Button
+    Friend WithEvents RichTextBox2 As RichTextBox
+    Friend WithEvents Panel9 As Panel
+    Friend WithEvents Label5 As Label
 End Class

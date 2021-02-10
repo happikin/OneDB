@@ -7,6 +7,7 @@ Public Class Form2
     Public Structure connCredentials
         Dim server, uid, pswd, db As String
     End Structure
+    Public condition As String
     Public TypeFieldArrayCount As Integer
     Public conOne As connCredentials
     Public themeState As Integer '0 for Light Mode;1 for Dark Mode
@@ -14,6 +15,7 @@ Public Class Form2
     Public globalCounter = -1, globalIndex As Integer = 0
     Public entryContainer() As entryItem
     Public TypeFieldArray() As entryItem
+    Public conditionContainer As entryItem
     Public Sub showData(ByVal tableName As String)
         Dim sqlConn As New MySqlConnection
         Dim sqlCmd As New MySqlCommand
@@ -115,6 +117,35 @@ Public Class Form2
         sqlDT.Clear()
     End Sub
 
+    Public Sub fillComboBox3()  'is supposed to be called from the reset button
+        Dim sqlDA As New MySqlDataAdapter
+        Dim sqlDR As MySqlDataReader
+        Dim sqlCmd As New MySqlCommand
+        Dim DataTable As New DataTable
+        Dim sqlCon As New MySqlConnection("server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";")
+        sqlCon.Open()
+        sqlCmd.Connection = sqlCon
+
+        If ComboBox1.SelectedItem IsNot Nothing Then
+            sqlCmd.CommandText = "SELECT * FROM " + ComboBox1.SelectedItem.ToString + ";"
+            sqlDR = sqlCmd.ExecuteReader
+            DataTable.Load(sqlDR)
+            sqlCon.Close()
+
+            For index = 0 To DataTable.Columns.Count - 1
+                ComboBox3.Items.Add(DataTable.Columns(index).ColumnName)
+            Next
+            Panel2.Visible = False
+            sqlDA.Dispose()
+            DataTable.Clear()
+            sqlDR.Dispose()
+            sqlCon.Close()
+        Else
+            MsgBox("Please select a table first", MsgBoxStyle.Information, "Alert")
+        End If
+
+    End Sub
+
     Public Sub showEditingPanel(ByVal bname As String) 'ByVal item As ComboBox.ObjectCollection)
         Dim sqlDA As New MySqlDataAdapter
         Dim sqlDR As MySqlDataReader
@@ -136,7 +167,7 @@ Public Class Form2
                 ComboBox2.Items.Add(DataTable.Columns(index).ColumnName)
                 TypeFieldArray(index) = New entryItem(DataTable.Columns(index).ColumnName, DataTable.Columns(index).DataType.ToString)
                 'TypeFieldArray(index).getConstraint(DataTable.Constraints(index)," ")
-                MsgBox(TypeFieldArray(index).getFieldType, 1, " ")
+                'MsgBox(TypeFieldArray(index).getFieldType, 1, " ")
             Next
             Panel2.Visible = False
             Panel5.Visible = True
@@ -153,6 +184,27 @@ Public Class Form2
 
     End Sub
 
+    Public Sub executeMySqlQuery(ByVal sqlquery As String) 'ByVal item As ComboBox.ObjectCollection)
+        MsgBox(sqlquery, 1, "Final Query")
+        If MsgBoxResult.Ok Then
+            '//---- Now we attemt to actually insert into the table----//'
+            Dim sqlConn As New MySqlConnection
+            Dim sqlCmd As New MySqlCommand
+            sqlConn.ConnectionString = "server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";"
+            sqlCmd.Connection = sqlConn
+            sqlConn.Open()
+            sqlCmd.CommandText = sqlquery
+            Try
+                sqlCmd.ExecuteNonQuery()
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.OkOnly, "Caution!")
+                Exit Sub
+            End Try
+            sqlConn.Close()
+            resetEditingPanel()
+            showData(ComboBox1.SelectedItem.ToString)
+        End If
+    End Sub
     Public Sub resetEditingPanel()
         Panel5.Visible = False
         globalCounter = 0
@@ -171,6 +223,7 @@ Public Class Form2
 
 
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Panel8.Visible = False
         Panel5.Visible = False
         themeState = 0
         Panel2.BringToFront()
@@ -231,7 +284,10 @@ Public Class Form2
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        showEditingPanel("UPDATE")
+        Panel8.Visible = True
+        Panel5.Visible = False
+        Panel8.Location = New Point(422, 200)
+        fillComboBox3()
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs)
@@ -397,11 +453,39 @@ Public Class Form2
         ReDim entryContainer(ComboBox2.Items.Count)     'will automatically create array of objects to contain max possible
     End Sub
 
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        RichTextBox2.Clear()
+        ComboBox2.Items.Clear()
+        ComboBox3.Items.Clear()
+        Panel5.Visible = False
+        Panel8.Visible = False
+    End Sub
+
+    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
+        If ComboBox3.SelectedItem IsNot Nothing Then
+            conditionContainer = New entryItem(ComboBox3.SelectedItem.ToString, RichTextBox2.Text)
+            Panel8.Visible = False
+            ComboBox3.Items.Clear()
+            showEditingPanel("UPDATE")
+            Button11.Enabled = True
+            Button11.Location = New Point(250, 358)
+            Button10.Visible = True
+            Button10.Enabled = True
+            Button10.Location = New Point(80, 358)
+            Button12.Location = New Point(149, 358)
+            Button12.Size = New Size(81, 34)
+            Button11.Enabled = True
+        End If
+        RichTextBox2.Clear()
+        ComboBox3.Items.Clear()
+
+    End Sub
+
     Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
         Dim tbname As String = ComboBox1.SelectedItem.ToString
         Dim query As String
         Select Case (Button11.Text)
-            Case "INSERT"
+            Case "INSERT"   'MODE : 0
                 If globalCounter = ComboBox2.Items.Count Then
                     'PUT THE MODIFIED COE HERE WITH THE INSERT INTO TABLE VALUE(-----) type
                 End If
@@ -430,27 +514,9 @@ Public Class Form2
                     Next
                     query = query + ");"
                     'Dim a As String = entryContainer(1).getFieldType()
-                    MsgBox(query, 1, "Final Query")
-                    If MsgBoxResult.Ok Then
-                        '//---- Now we attemt to actually insert into the table----//'
-                        Dim sqlConn As New MySqlConnection
-                        Dim sqlCmd As New MySqlCommand
-                        sqlConn.ConnectionString = "server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";"
-                        sqlCmd.Connection = sqlConn
-                        sqlConn.Open()
-                        sqlCmd.CommandText = query
-                        Try
-                            sqlCmd.ExecuteNonQuery()
-                        Catch ex As Exception
-                            MsgBox(ex.Message, MsgBoxStyle.OkOnly, "Caution!")
-                            Exit Sub
-                        End Try
-                        sqlConn.Close()
-                        resetEditingPanel()
-                        showData(ComboBox1.SelectedItem.ToString)
-                    End If
+                    executeMySqlQuery(query)
                 End If
-            Case "DELETE"
+            Case "DELETE"   'MODE : 1
                 'we can also provide a choice pane to select from which 
                 'type of consition clause must be chosen
                 'like:-
@@ -460,27 +526,30 @@ Public Class Form2
                 If ComboBox2.SelectedItem IsNot Nothing Then
                     query = "DELETE " & " FROM " & tbname & " WHERE " & ComboBox2.SelectedItem.ToString & " LIKE " _
                         & ControlChars.Quote & RichTextBox1.Text & ControlChars.Quote & ";"
-                    MsgBox(query, 1, "Final Query")
-                    If MsgBoxResult.Ok = 1 Then
-                        '//---- Now we attemt to actually insert into the table----//'
-                        Dim sqlConn As New MySqlConnection
-                        Dim sqlCmd As New MySqlCommand
-                        sqlConn.ConnectionString = "server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";"
-                        sqlCmd.Connection = sqlConn
-                        sqlConn.Open()
-                        sqlCmd.CommandText = query
-                        Try
-                            sqlCmd.ExecuteNonQuery()
-                        Catch ex As Exception
-                            MsgBox(ex.Message, MsgBoxStyle.OkOnly, "Caution!")
-                            Exit Sub
-                        End Try
-                        sqlConn.Close()
-                        resetEditingPanel()
-                        showData(ComboBox1.SelectedItem.ToString)
-                    End If
+                    executeMySqlQuery(query)
+
                 End If
-            Case "UPDATE"
+            Case "UPDATE"   'MODE : 2
+                query = "UPDATE " & tbname & " SET "
+                If entryContainer(0) IsNot Nothing Then
+                    query = query & entryContainer(0).getColName & " = " &
+                            entryContainer(0).getValue
+                End If
+
+                For index = 1 To globalCounter
+
+                    If entryContainer(index) IsNot Nothing Then
+                        query = query & " , " & entryContainer(index).getColName & " = " &
+                            entryContainer(index).getValue
+                    Else
+                        Exit For
+                    End If
+
+                Next
+
+                query = query & " WHERE " & conditionContainer.getConditionName &
+                    " LIKE " & conditionContainer.getConditionValue & ";"
+                executeMySqlQuery(query)
             Case "CREATE"
         End Select
     End Sub
