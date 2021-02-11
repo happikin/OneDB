@@ -12,7 +12,7 @@
     End Sub
     Public Sub New(ByVal a As String, ByVal c As String) 'To instantiate objects of TypeFieldArray
         colName = a
-        fieldType = c
+        fieldType = c   'is also used to store the condtion name
     End Sub
     Public Function getColName() As String
         Return colName
@@ -32,8 +32,17 @@
     Public Function getConditionName() As String
         Return colName
     End Function
-    Public Function getConditionValue() As String
+    Public Function getConditionType() As String
         Return fieldType
+    End Function
+    Public Sub setConditionValue(a As String)
+        value = a
+    End Sub
+    Public Sub setConditionType(a As String)
+        fieldType = a
+    End Sub
+    Public Function getConditionValue() As String
+        Return value
     End Function
     Public Sub parseValue()
         Try

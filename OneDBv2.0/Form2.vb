@@ -8,7 +8,7 @@ Public Class Form2
         Dim server, uid, pswd, db As String
     End Structure
     Public condition As String
-    Public TypeFieldArrayCount As Integer
+    Public TypeFieldArrayCount As Integer = 0
     Public conOne As connCredentials
     Public themeState As Integer '0 for Light Mode;1 for Dark Mode
     Public dbname As String = "sakila"
@@ -132,9 +132,16 @@ Public Class Form2
             DataTable.Load(sqlDR)
             sqlCon.Close()
 
-            For index = 0 To DataTable.Columns.Count - 1
+            TypeFieldArrayCount = DataTable.Columns.Count
+            ReDim TypeFieldArray(TypeFieldArrayCount) 'will init declare the array size as the noumber of columns in the table
+
+            For index = 0 To TypeFieldArrayCount - 1
                 ComboBox3.Items.Add(DataTable.Columns(index).ColumnName)
+                TypeFieldArray(index) = New entryItem(DataTable.Columns(index).ColumnName, DataTable.Columns(index).DataType.ToString)
             Next
+
+            'TypeFieldArrayCount = 0 'reset count for future reuse
+
             Panel2.Visible = False
             sqlDA.Dispose()
             DataTable.Clear()
@@ -288,6 +295,9 @@ Public Class Form2
         Panel5.Visible = False
         Panel8.Location = New Point(422, 200)
         fillComboBox3()
+
+
+
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs)
@@ -463,9 +473,20 @@ Public Class Form2
 
     Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
         If ComboBox3.SelectedItem IsNot Nothing Then
-            conditionContainer = New entryItem(ComboBox3.SelectedItem.ToString, RichTextBox2.Text)
+
+            conditionContainer = New entryItem(ComboBox3.SelectedItem.ToString, RichTextBox2.Text, " ")
+
+            For index = 0 To TypeFieldArrayCount - 1
+                If conditionContainer.getConditionName = TypeFieldArray(index).getColName Then
+                    conditionContainer.setConditionType(TypeFieldArray(index).getFieldType)
+                    conditionContainer.parseValue()
+                    Exit For
+                End If
+            Next
+
             Panel8.Visible = False
             ComboBox3.Items.Clear()
+
             showEditingPanel("UPDATE")
             Button11.Enabled = True
             Button11.Location = New Point(250, 358)
@@ -475,6 +496,8 @@ Public Class Form2
             Button12.Location = New Point(149, 358)
             Button12.Size = New Size(81, 34)
             Button11.Enabled = True
+        Else
+            MsgBox("Select a constraint", 1, "Message!")
         End If
         RichTextBox2.Clear()
         ComboBox3.Items.Clear()
