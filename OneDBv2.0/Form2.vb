@@ -187,6 +187,9 @@ Public Class Form2
 
         Else
             MsgBox("Please select a table first", MsgBoxStyle.Information, "Alert")
+            If MsgBoxResult.Ok = MsgBoxResult.Ok Then
+                Panel2.Visible = False
+            End If
         End If
 
     End Sub
@@ -230,10 +233,14 @@ Public Class Form2
 
 
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Panel11.Visible = False
         Panel8.Visible = False
         Panel5.Visible = False
         themeState = 0
         Panel2.BringToFront()
+        Button15.BackColor = Color.White
+        Button16.BackColor = Color.White
+        Button17.BackColor = Color.White
         Button7.BackColor = Color.White
         Button8.BackColor = Color.White
         Panel4.BackColor = Color.White
@@ -291,13 +298,17 @@ Public Class Form2
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        Panel8.Visible = True
-        Panel5.Visible = False
-        Panel8.Location = New Point(422, 200)
-        fillComboBox3()
-
-
-
+        If ComboBox1.SelectedItem IsNot Nothing Then
+            Panel8.Visible = True
+            Panel5.Visible = False
+            Panel8.Location = New Point(422, 200)
+            fillComboBox3()
+        Else
+            MsgBox("Please select a table first", MsgBoxStyle.Information, "Alert")
+            If MsgBoxResult.Ok = MsgBoxResult.Ok Then
+                Panel2.Visible = False
+            End If
+        End If
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs)
@@ -363,14 +374,16 @@ Public Class Form2
             showData(ComboBox1.SelectedItem.ToString)
         Else
             MsgBox("Please select a table name!", MsgBoxStyle.Information, "Message")
+            If MsgBoxResult.Ok = MsgBoxResult.Ok Then
+                Panel2.Visible = False
+            End If
         End If
-
-
         Panel2.Visible = False
     End Sub
 
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
         Button11.Text = "FIND"
+        Panel2.Visible = False
     End Sub
 
     Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
@@ -502,6 +515,24 @@ Public Class Form2
         RichTextBox2.Clear()
         ComboBox3.Items.Clear()
 
+    End Sub
+
+    Private Sub Button15_Click(sender As Object, e As EventArgs) Handles Button15.Click
+        Panel11.Visible = True
+    End Sub
+
+    Private Sub Button16_Click(sender As Object, e As EventArgs) Handles Button16.Click
+        Panel11.Visible = False
+        Panel2.Visible = False
+    End Sub
+
+    Private Sub Button17_Click(sender As Object, e As EventArgs) Handles Button17.Click
+        Panel2.Visible = False
+        Panel11.Visible = False
+    End Sub
+
+    Private Sub Button18_Click(sender As Object, e As EventArgs) Handles Button18.Click
+        Panel11.Visible = False
     End Sub
 
     Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
