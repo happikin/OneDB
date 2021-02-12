@@ -2,11 +2,9 @@
 Imports MySql.Data.MySqlClient
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
+
 Public Class Form2
 
-    Public Structure connCredentials
-        Dim server, uid, pswd, db As String
-    End Structure
     Public condition As String
     Public TypeFieldArrayCount As Integer = 0
     Public conOne As connCredentials
@@ -285,6 +283,7 @@ Public Class Form2
         Button12.Location = New Point(149, 358)
         Button12.Size = New Size(81, 34)
         Button11.Enabled = True
+        Panel11.Visible = False
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
@@ -295,6 +294,7 @@ Public Class Form2
         Button12.Location = New Point(250, 358)
         Button12.Size = New Size(142, 34)
         Button11.Enabled = True
+        Panel11.Visible = False
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
@@ -309,6 +309,7 @@ Public Class Form2
                 Panel2.Visible = False
             End If
         End If
+        Panel11.Visible = False
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs)
@@ -326,6 +327,7 @@ Public Class Form2
 
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click   'TOGGLE BUTTON
         Panel2.Visible = False
+        Panel11.Visible = False
         If themeState = 0 Then  'if light theme
             Panel2.BackColor = Color.Black
             Button2.BackColor = Color.Black
@@ -361,6 +363,7 @@ Public Class Form2
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        Panel11.Visible = False
         Panel2.Visible = False
         MessageBox.Show("Created By : Yashesvi Raina(Happikin)   https://github.com/happikin ", "About", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
@@ -379,11 +382,13 @@ Public Class Form2
             End If
         End If
         Panel2.Visible = False
+        Panel11.Visible = False
     End Sub
 
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
         Button11.Text = "FIND"
         Panel2.Visible = False
+        Panel11.Visible = False
     End Sub
 
     Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
@@ -524,6 +529,8 @@ Public Class Form2
     Private Sub Button16_Click(sender As Object, e As EventArgs) Handles Button16.Click
         Panel11.Visible = False
         Panel2.Visible = False
+        Me.Hide()
+        Form3.Show()
     End Sub
 
     Private Sub Button17_Click(sender As Object, e As EventArgs) Handles Button17.Click

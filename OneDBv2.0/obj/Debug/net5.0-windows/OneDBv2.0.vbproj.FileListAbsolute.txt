@@ -30,3 +30,4 @@ C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\bin\Debug\net5.0-windows\Zstanda
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\bin\Debug\net5.0-windows\Renci.SshNet.dll
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\bin\Debug\net5.0-windows\SshNet.Security.Cryptography.dll
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\net5.0-windows\OneDBv2.0.vbproj.CopyComplete
+C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\net5.0-windows\OneDBv2._0.Form3.resources
