@@ -71,7 +71,6 @@ Partial Class Form2
         Me.Button18 = New System.Windows.Forms.Button()
         Me.Button17 = New System.Windows.Forms.Button()
         Me.Button16 = New System.Windows.Forms.Button()
-        Me.DomainUpDown1 = New System.Windows.Forms.DomainUpDown()
         Me.Panel2.SuspendLayout()
         Me.Panel4.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -689,21 +688,12 @@ Partial Class Form2
         Me.Button16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button16.UseVisualStyleBackColor = False
         '
-        'DomainUpDown1
-        '
-        Me.DomainUpDown1.Location = New System.Drawing.Point(422, 63)
-        Me.DomainUpDown1.Name = "DomainUpDown1"
-        Me.DomainUpDown1.Size = New System.Drawing.Size(180, 31)
-        Me.DomainUpDown1.TabIndex = 18
-        Me.DomainUpDown1.Text = "DomainUpDown1"
-        '
         'Form2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(1280, 720)
-        Me.Controls.Add(Me.DomainUpDown1)
         Me.Controls.Add(Me.Panel11)
         Me.Controls.Add(Me.Panel8)
         Me.Controls.Add(Me.Panel1)
@@ -781,5 +771,4 @@ Partial Class Form2
     Friend WithEvents Button17 As Button
     Friend WithEvents Button16 As Button
     Friend WithEvents Button18 As Button
-    Friend WithEvents DomainUpDown1 As DomainUpDown
 End Class
