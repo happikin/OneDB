@@ -23,16 +23,16 @@ Partial Class Form3
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Button9 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -42,11 +42,50 @@ Partial Class Form3
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column7})
         Me.DataGridView1.Location = New System.Drawing.Point(36, 97)
+        Me.DataGridView1.MultiSelect = False
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersWidth = 62
         Me.DataGridView1.RowTemplate.Height = 33
         Me.DataGridView1.Size = New System.Drawing.Size(578, 444)
         Me.DataGridView1.TabIndex = 0
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "Field_Name"
+        Me.Column1.MinimumWidth = 8
+        Me.Column1.Name = "Column1"
+        Me.Column1.Width = 200
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "Data_Type"
+        Me.Column2.MinimumWidth = 8
+        Me.Column2.Name = "Column2"
+        Me.Column2.Width = 200
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "PK"
+        Me.Column3.MinimumWidth = 8
+        Me.Column3.Name = "Column3"
+        Me.Column3.ToolTipText = "Primary Key"
+        Me.Column3.Width = 38
+        '
+        'Column4
+        '
+        Me.Column4.HeaderText = "NN"
+        Me.Column4.MinimumWidth = 8
+        Me.Column4.Name = "Column4"
+        Me.Column4.ToolTipText = "Not null"
+        Me.Column4.Width = 38
+        '
+        'Column7
+        '
+        Me.Column7.HeaderText = "AI"
+        Me.Column7.MinimumWidth = 8
+        Me.Column7.Name = "Column7"
+        Me.Column7.ToolTipText = "Auto Increment"
+        Me.Column7.Width = 38
         '
         'Label1
         '
@@ -65,7 +104,7 @@ Partial Class Form3
         Me.TextBox1.BackColor = System.Drawing.Color.DimGray
         Me.TextBox1.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.TextBox1.ForeColor = System.Drawing.Color.White
-        Me.TextBox1.Location = New System.Drawing.Point(190, 39)
+        Me.TextBox1.Location = New System.Drawing.Point(190, 33)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(177, 39)
         Me.TextBox1.TabIndex = 2
@@ -114,46 +153,6 @@ Partial Class Form3
         Me.Button2.Text = "REMOVE"
         Me.Button2.UseVisualStyleBackColor = False
         '
-        'Column1
-        '
-        Me.Column1.HeaderText = "Field_Name"
-        Me.Column1.MinimumWidth = 8
-        Me.Column1.Name = "Column1"
-        Me.Column1.Width = 200
-        '
-        'Column2
-        '
-        Me.Column2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Column2.HeaderText = "Data_Type"
-        Me.Column2.Items.AddRange(New Object() {"INT", "CHAR", "VARCHAR", "DATE"})
-        Me.Column2.MinimumWidth = 8
-        Me.Column2.Name = "Column2"
-        Me.Column2.Width = 200
-        '
-        'Column3
-        '
-        Me.Column3.HeaderText = "PK"
-        Me.Column3.MinimumWidth = 8
-        Me.Column3.Name = "Column3"
-        Me.Column3.ToolTipText = "Primary Key"
-        Me.Column3.Width = 38
-        '
-        'Column4
-        '
-        Me.Column4.HeaderText = "NN"
-        Me.Column4.MinimumWidth = 8
-        Me.Column4.Name = "Column4"
-        Me.Column4.ToolTipText = "Not null"
-        Me.Column4.Width = 38
-        '
-        'Column7
-        '
-        Me.Column7.HeaderText = "AI"
-        Me.Column7.MinimumWidth = 8
-        Me.Column7.Name = "Column7"
-        Me.Column7.ToolTipText = "Auto Increment"
-        Me.Column7.Width = 38
-        '
         'Form3
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
@@ -184,7 +183,7 @@ Partial Class Form3
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
-    Friend WithEvents Column2 As DataGridViewComboBoxColumn
+    Friend WithEvents Column2 As DataGridViewTextBoxColumn
     Friend WithEvents Column3 As DataGridViewCheckBoxColumn
     Friend WithEvents Column4 As DataGridViewCheckBoxColumn
     Friend WithEvents Column7 As DataGridViewCheckBoxColumn

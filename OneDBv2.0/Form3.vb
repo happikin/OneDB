@@ -1,4 +1,5 @@
-﻿Public Class Form3
+﻿Imports MySql.Data.MySqlClient
+Public Class Form3
     Public entryAsColumns() As DataGridViewColumnCollection
     Public entryAsRows() As DataGridViewRowCollection
     Dim conOne As connCredentials
@@ -18,16 +19,32 @@
         'TO USE THIS FIRST CALL RecordConstraint() subprocedure
         Dim constraintstring As String = " "
         If keys.PK = True Then
-            constraintstring &= "PRIMARY KEY"
+            constraintstring &= " PRIMARY KEY"
         End If
         If keys.NN = True Then
-            constraintstring &= "NOT NULL"
+            constraintstring &= " NOT NULL"
         End If
         If keys.AI = True Then
-            constraintstring &= "AUTO INCREMENT"
+            constraintstring &= " AUTO INCREMENT"
         End If
         Return constraintstring
     End Function
+
+    Public Sub createTable(query As String)
+        Dim sqlCon As New MySqlConnection
+        Dim sqlCmd As New MySqlCommand
+        sqlCon.ConnectionString = "server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";"
+        sqlCmd.Connection = sqlCon
+        sqlCon.Open()
+        sqlCmd.CommandText = query
+        Try
+            sqlCmd.ExecuteNonQuery()
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.OkOnly, "Caution!")
+            Exit Sub
+        End Try
+        sqlCon.Close()
+    End Sub
     Private Sub Form3_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         conOne.server = "localhost"
@@ -44,16 +61,17 @@
     End Sub
 
     Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
+
         'DataGridView1.Rows.Item(DataGridView1.CurrentRow.Index).DataGridView.BeginEdit(True)
     End Sub
 
     Private Sub DataGridView1_EditingControlShowing(sender As Object, e As DataGridViewEditingControlShowingEventArgs) Handles DataGridView1.EditingControlShowing
-        If TypeOf e.Control Is DataGridViewComboBoxEditingControl Then
-            'CType(e.Control, ComboBox).Items.Add(e.Control.Text)
-            CType(e.Control, ComboBox).DropDownStyle = ComboBoxStyle.DropDown
-            CType(e.Control, ComboBox).AutoCompleteSource = AutoCompleteSource.ListItems
-            CType(e.Control, ComboBox).AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
-        End If
+        'If TypeOf e.Control Is DataGridViewComboBoxEditingControl Then
+        '    'CType(e.Control, ComboBox).Items.Add(e.Control.Text)
+        '    CType(e.Control, ComboBox).DropDownStyle = ComboBoxStyle.DropDown
+        '    CType(e.Control, ComboBox).AutoCompleteSource = AutoCompleteSource.ListItems
+        '    CType(e.Control, ComboBox).AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        'End If
     End Sub
 
     Private Sub DataGridView1_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles DataGridView1.DataError
@@ -63,11 +81,20 @@
         End If
     End Sub
 
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        If DataGridView1.Rows.Count >= 2 Then
+            If DataGridView1.SelectedRows(0).IsNewRow = False Then
+                DataGridView1.Rows.Remove(DataGridView1.SelectedRows(0))
+            End If
+
+        End If
+    End Sub
+
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim rowCount As Integer = DataGridView1.Rows.Count - 1
         Dim createquery As String
         '//----FIRST WE MADE AN ARRAY OF ALL ROWS IN REQUIRED WAY----//
-        If rowCount > 0 Then
+        If rowCount > 0 And TextBox1.Text IsNot Nothing Then
             Dim DataGridRowContainer(rowCount) As TableRowContainer
             For index = 0 To rowCount - 1
                 RecordConstraint(index)
@@ -75,12 +102,19 @@
                     (DataGridView1.Rows(index).Cells(0).Value, DataGridView1.Rows(index).Cells(1).Value, GetConstraintString())
             Next
             '//----NOW WE MUST BUILD THE QUERY----//
-            createquery = "CREATE TABLE " & tableName & "("
-            For index = 0 To rowCount - 1
-                createquery &= DataGridRowContainer(index).getField & DataGridRowContainer(index).getColType
+            createquery = "CREATE TABLE " & TextBox1.Text & " (" & DataGridRowContainer(0).getField & " " &
+                DataGridRowContainer(0).getColType _
+                    & DataGridRowContainer(0).getConstraint
+            For index = 1 To rowCount - 1
+                createquery &= ", " & DataGridRowContainer(index).getField & " " & DataGridRowContainer(index).getColType _
+                    & DataGridRowContainer(index).getConstraint
             Next
 
-            MsgBox(DataGridView1.Rows.Count, 1, "")
+            createquery &= ");"
+
+            createTable(createquery)
+
+            MsgBox(createquery, 1, "//--TEST--\\")
         Else
             MsgBox(DataGridView1.Rows.Count, 1, "")
         End If
