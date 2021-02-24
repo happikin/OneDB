@@ -112,11 +112,13 @@ Public Class Form3
 
             createquery &= ");"
 
-            createTable(createquery)
-
-            MsgBox(createquery, 1, "//--TEST--\\")
+            If MsgBox(createquery, MsgBoxStyle.Information, "//--TEST--\\") = MsgBoxResult.Ok Then
+                createTable(createquery)
+                Me.Close()
+                Form2.Show()
+            End If
         Else
-            MsgBox(DataGridView1.Rows.Count, 1, "")
+            MsgBox("Please make an entry!", MsgBoxStyle.Information, "Message")
         End If
 
         'ReDim entryAsRows(DataGridView1.Rows.Count)
@@ -140,8 +142,8 @@ Public Class Form3
         '        'End If
         '    Next
         'Next
-        RecordConstraint(0)
-        MsgBox(keys.PK, 1, "")
+        'RecordConstraint(0)
+        'MsgBox(keys.PK, 1, "")
 
     End Sub
 End Class

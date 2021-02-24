@@ -82,10 +82,11 @@ Partial Class Form2
         'Panel1
         '
         Me.Panel1.BackgroundImage = CType(resources.GetObject("Panel1.BackgroundImage"), System.Drawing.Image)
-        Me.Panel1.Location = New System.Drawing.Point(0, 626)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1280, 94)
+        Me.Panel1.Size = New System.Drawing.Size(1280, 720)
         Me.Panel1.TabIndex = 0
         Me.Panel1.Visible = False
         '
@@ -694,9 +695,9 @@ Partial Class Form2
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(1280, 720)
+        Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.Panel11)
         Me.Controls.Add(Me.Panel8)
-        Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.Panel5)
         Me.Controls.Add(Me.RefreshButton1)
         Me.Controls.Add(Me.MinimizeButton1)

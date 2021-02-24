@@ -14,6 +14,9 @@
         colName = a
         fieldType = c   'is also used to store the condtion name
     End Sub
+    Public Sub New(ByVal column As String)
+        colName = column
+    End Sub
     Public Function getColName() As String
         Return colName
     End Function
@@ -44,7 +47,7 @@
     Public Function getConditionValue() As String
         Return value
     End Function
-    Public Sub parseValue()
+    Public Function parseValue() As Boolean
         Try
             Select Case (fieldType)
                 Case "System.String"
@@ -56,9 +59,11 @@
                 Case "System.Int16"
                     value = Convert.ToInt16(value)
             End Select
+            Return True
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.OkOnly, "Alert")
-            Exit Sub
+            Return False
+            Exit Function
         End Try
-    End Sub
+    End Function
 End Class
