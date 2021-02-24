@@ -22,6 +22,7 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
@@ -30,6 +31,7 @@ Partial Class Form1
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.Button2 = New System.Windows.Forms.Button()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'Panel1
@@ -52,7 +54,7 @@ Partial Class Form1
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(273, 30)
         Me.TextBox1.TabIndex = 2
-        Me.TextBox1.Text = "Username"
+        Me.TextBox1.Text = "username"
         Me.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Button1
@@ -85,7 +87,8 @@ Partial Class Form1
         '
         'Panel2
         '
-        Me.Panel2.BackgroundImage = CType(resources.GetObject("Panel2.BackgroundImage"), System.Drawing.Image)
+        Me.Panel2.BackColor = System.Drawing.Color.Teal
+        Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel2.Location = New System.Drawing.Point(89, 333)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(273, 4)
@@ -93,7 +96,8 @@ Partial Class Form1
         '
         'Panel3
         '
-        Me.Panel3.BackgroundImage = CType(resources.GetObject("Panel3.BackgroundImage"), System.Drawing.Image)
+        Me.Panel3.BackColor = System.Drawing.Color.Teal
+        Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel3.Location = New System.Drawing.Point(89, 393)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(273, 4)
@@ -112,6 +116,10 @@ Partial Class Form1
         Me.Button2.TabIndex = 8
         Me.Button2.Text = "Exit"
         Me.Button2.UseVisualStyleBackColor = True
+        '
+        'Timer1
+        '
+        Me.Timer1.Interval = 3000
         '
         'Form1
         '
@@ -144,4 +152,5 @@ Partial Class Form1
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Panel3 As Panel
     Friend WithEvents Button2 As Button
+    Friend WithEvents Timer1 As Timer
 End Class
