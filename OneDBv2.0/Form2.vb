@@ -2,6 +2,7 @@
 Imports MySql.Data.MySqlClient
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
+Imports System.Diagnostics
 
 Public Class Form2
     Public panelButtonName As String
@@ -19,16 +20,17 @@ Public Class Form2
     Public Sub showData(ByVal tableName As String, Optional ByVal mode As Integer = 0, Optional query As String = " ")
         Dim sqlConn As New MySqlConnection
         Dim sqlCmd As New MySqlCommand
-        Dim sqlDA As New MySqlDataAdapter
         Dim sqlDT As New DataTable
         Dim sqlDR As MySqlDataReader
-        sqlDT.Clear()
-        sqlConn.Close()
         sqlConn.ConnectionString = "server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";"
-        sqlConn.Open()
-        sqlCmd.Connection = sqlConn
+        Try
+            sqlConn.Open()
+            sqlCmd.Connection = sqlConn
+        Catch ex As Exception
+            MsgBox(ex.Message, 64, "MESSAGE")
+        End Try
         If mode = 0 Then
-            sqlCmd.CommandText = "select * from " + tableName
+            sqlCmd.CommandText = "SELECT * FROM " + tableName + ";"
         Else
             '//--CODE FOR FIND OPERATION SHOULD COME HERE--//
             sqlCmd.CommandText = query
@@ -43,11 +45,10 @@ Public Class Form2
         sqlDT.Load(sqlDR)
         sqlDR.Close()
         sqlConn.Close()
-        DataGridView1.DataSource = sqlDT
 
+        DataGridView1.DataSource = sqlDT
         If DataGridView1.Columns.Count < 5 Then
             DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-
         Else
             DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
         End If
@@ -139,6 +140,7 @@ Public Class Form2
         Dim DataTable As New DataTable
         Dim sqlCon As New MySqlConnection("server=" + conOne.server + ";" + "user id=" + conOne.uid + ";" + "password=" + conOne.pswd + ";" + "database=" + conOne.db + ";")
         ComboBox3.Items.Clear()
+
         Try
             sqlCon.Open()
             sqlCmd.Connection = sqlCon
@@ -146,7 +148,6 @@ Public Class Form2
             MsgBox(ex.Message, 64, "MESSAGE")
             Exit Sub
         End Try
-
 
         If ComboBox1.SelectedItem IsNot Nothing Then
             sqlCmd.CommandText = "SELECT * FROM " + ComboBox1.SelectedItem.ToString + ";"
@@ -172,7 +173,6 @@ Public Class Form2
         Else
             MsgBox("Please select a table first", MsgBoxStyle.Information, "Alert")
         End If
-
     End Sub
 
     Public Sub showEditingPanel(ByVal bname As String) 'ByVal item As ComboBox.ObjectCollection)
@@ -189,7 +189,7 @@ Public Class Form2
             Exit Sub
         End Try
 
-        If ComboBox1.SelectedItem <> Nothing Then
+        If ComboBox1.SelectedItem IsNot Nothing Then
             sqlCmd.CommandText = "SELECT * FROM " + ComboBox1.SelectedItem.ToString + ";"
             sqlDR = sqlCmd.ExecuteReader
             DataTable.Load(sqlDR)
@@ -211,18 +211,19 @@ Public Class Form2
             sqlDR.Dispose()
             sqlCon.Close()
             Button11.Enabled = False
+            Panel12.Visible = False
         Else
-            MsgBox("Please select a table first", MsgBoxStyle.Information, "Alert")
-            If MsgBoxResult.Ok = MsgBoxResult.Ok Then
+
+            If MsgBox("Please select a table first", MsgBoxStyle.Information, "Alert") = MsgBoxResult.Ok Then
                 Panel2.Visible = False
+                Panel12.Visible = True
             End If
         End If
 
     End Sub
 
     Public Sub executeMySqlQuery(ByVal sqlquery As String) 'ByVal item As ComboBox.ObjectCollection)
-        MsgBox(sqlquery, 1, "Final Query")
-        If MsgBoxResult.Ok Then
+        If MsgBox(sqlquery, 1, "Final Query") = MsgBoxResult.Ok Then
             '//---- Now we attemt to actually insert into the table----//'
             Dim sqlConn As New MySqlConnection
             Dim sqlCmd As New MySqlCommand
@@ -297,6 +298,15 @@ Public Class Form2
 
 
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(46, 45, 45) 'DARK MODE
+        DataGridView1.BorderStyle = BorderStyle.FixedSingle
+        DataGridView1.GridColor = Color.Black
+        DataGridView1.DefaultCellStyle.ForeColor = Color.White
+        DataGridView1.RowHeadersDefaultCellStyle.BackColor = Color.FromArgb(40, 97, 129)
+        'DataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(2, 78, 78)
+        DataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White
+        'DataGridView1.ColumnHeadersDefaultCellStyle = DataGridView1.EnableHeadersVisualStyles
+        Panel12.Visible = True
         Panel1.Visible = True
         Panel11.Visible = False
         Panel8.Visible = False
@@ -394,6 +404,7 @@ Public Class Form2
     End Sub
 
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click   'TOGGLE BUTTON
+        MessageBox.Show("Dark mode is under development")
         'Panel2.Visible = False
         'Panel11.Visible = False
         'If themeState = 0 Then  'if light theme
@@ -431,9 +442,22 @@ Public Class Form2
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        Dim target As String = "http://www.github.com/happikin/"
+        Dim browser As String = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
         Panel11.Visible = False
         Panel2.Visible = False
-        MessageBox.Show("Created By : Yashesvi Raina(Happikin)   https://github.com/happikin ", "About", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        If MessageBox.Show("Created By : Yashesvi Raina(Happikin) " & vbCrLf & "Press Yes to visit github", "About", MessageBoxButtons.YesNo, MessageBoxIcon.Information) _
+            = DialogResult.Yes Then
+            Try
+                Process.Start(target)
+            Catch ex As Exception
+                Try
+                    Process.Start(browser, target)
+                Catch ex2 As Exception
+                    MsgBox(ex2.Message, 64, " ")
+                End Try
+            End Try
+        End If
     End Sub
 
     Private Sub RefreshButton1_Click(sender As Object, e As EventArgs) Handles RefreshButton1.Click
@@ -441,20 +465,17 @@ Public Class Form2
     End Sub
 
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
-        If ComboBox1.SelectedItem <> Nothing Then
+        If ComboBox1.SelectedItem IsNot Nothing Then
             showData(ComboBox1.SelectedItem.ToString)
+            Panel12.Visible = False
         Else
-            MsgBox("Please select a table name!", MsgBoxStyle.Information, "Message")
-            If MsgBoxResult.Ok = MsgBoxResult.Ok Then
-                Panel2.Visible = False
-            End If
+            MsgBox("Please select a table first", MsgBoxStyle.Information, "Message")
         End If
         Panel2.Visible = False
         Panel11.Visible = False
     End Sub
 
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
-
         If ComboBox1.SelectedItem IsNot Nothing Then
             panelButtonName = "FIND"
             Panel8.Visible = True
@@ -464,7 +485,7 @@ Public Class Form2
             Button11.Text = "FIND"
             RichTextBox1.Visible = False
             Label4.Visible = False
-
+            Panel12.Visible = False
         Else
             If MsgBox("Please select a table first", MsgBoxStyle.Information, "Alert") = MsgBoxResult.Ok Then
                 Panel2.Visible = False
@@ -625,7 +646,11 @@ Public Class Form2
     Private Sub Button17_Click(sender As Object, e As EventArgs) Handles Button17.Click
         Panel2.Visible = False
         Panel11.Visible = False
-        dropTable("DROP TABLE " & ComboBox1.SelectedItem.ToString & ";", ComboBox1.SelectedItem.ToString)
+        If ComboBox1.SelectedItem IsNot Nothing Then
+            dropTable("DROP TABLE " & ComboBox1.SelectedItem.ToString & ";", ComboBox1.SelectedItem.ToString)
+        Else
+            MsgBox("Please select a table first", 64, "Message")
+        End If
     End Sub
 
     Private Sub Button18_Click(sender As Object, e As EventArgs) Handles Button18.Click
@@ -633,6 +658,14 @@ Public Class Form2
     End Sub
 
     Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
+
+    End Sub
+
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
+
+    End Sub
+
+    Private Sub DataGridView1_CellContentClick_1(sender As Object, e As DataGridViewCellEventArgs)
 
     End Sub
 

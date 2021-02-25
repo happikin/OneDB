@@ -24,6 +24,7 @@ Partial Class Form2
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form2))
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Button1 = New System.Windows.Forms.Button()
@@ -71,6 +72,7 @@ Partial Class Form2
         Me.Button18 = New System.Windows.Forms.Button()
         Me.Button17 = New System.Windows.Forms.Button()
         Me.Button16 = New System.Windows.Forms.Button()
+        Me.Panel12 = New System.Windows.Forms.Panel()
         Me.Panel2.SuspendLayout()
         Me.Panel4.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -82,11 +84,10 @@ Partial Class Form2
         'Panel1
         '
         Me.Panel1.BackgroundImage = CType(resources.GetObject("Panel1.BackgroundImage"), System.Drawing.Image)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel1.Location = New System.Drawing.Point(0, 0)
+        Me.Panel1.Location = New System.Drawing.Point(0, 663)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1280, 720)
+        Me.Panel1.Size = New System.Drawing.Size(1280, 57)
         Me.Panel1.TabIndex = 0
         Me.Panel1.Visible = False
         '
@@ -288,7 +289,7 @@ Partial Class Form2
         Me.RButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.RButton1.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         Me.RButton1.ForeColor = System.Drawing.Color.Transparent
-        Me.RButton1.Location = New System.Drawing.Point(1238, 8)
+        Me.RButton1.Location = New System.Drawing.Point(1239, 6)
         Me.RButton1.Margin = New System.Windows.Forms.Padding(2)
         Me.RButton1.Name = "RButton1"
         Me.RButton1.Size = New System.Drawing.Size(30, 30)
@@ -306,7 +307,7 @@ Partial Class Form2
         Me.MinimizeButton1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
         Me.MinimizeButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.MinimizeButton1.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.MinimizeButton1.Location = New System.Drawing.Point(1201, 8)
+        Me.MinimizeButton1.Location = New System.Drawing.Point(1203, 6)
         Me.MinimizeButton1.Margin = New System.Windows.Forms.Padding(2)
         Me.MinimizeButton1.Name = "MinimizeButton1"
         Me.MinimizeButton1.Size = New System.Drawing.Size(30, 30)
@@ -324,15 +325,16 @@ Partial Class Form2
         Me.RefreshButton1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
         Me.RefreshButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.RefreshButton1.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.RefreshButton1.Location = New System.Drawing.Point(1165, 6)
+        Me.RefreshButton1.Location = New System.Drawing.Point(1166, 6)
         Me.RefreshButton1.Margin = New System.Windows.Forms.Padding(2)
         Me.RefreshButton1.Name = "RefreshButton1"
-        Me.RefreshButton1.Size = New System.Drawing.Size(32, 32)
+        Me.RefreshButton1.Size = New System.Drawing.Size(30, 30)
         Me.RefreshButton1.TabIndex = 8
         Me.RefreshButton1.UseVisualStyleBackColor = False
         '
         'Panel4
         '
+        Me.Panel4.BackgroundImage = CType(resources.GetObject("Panel4.BackgroundImage"), System.Drawing.Image)
         Me.Panel4.Controls.Add(Me.Label2)
         Me.Panel4.Controls.Add(Me.Label1)
         Me.Panel4.Location = New System.Drawing.Point(0, 0)
@@ -344,9 +346,10 @@ Partial Class Form2
         'Label2
         '
         Me.Label2.AutoSize = True
+        Me.Label2.BackColor = System.Drawing.Color.FromArgb(CType(CType(46, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
-        Me.Label2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(46, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
-        Me.Label2.Location = New System.Drawing.Point(574, 9)
+        Me.Label2.ForeColor = System.Drawing.Color.Teal
+        Me.Label2.Location = New System.Drawing.Point(574, 8)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(133, 25)
@@ -356,9 +359,10 @@ Partial Class Form2
         'Label1
         '
         Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.Color.FromArgb(CType(CType(46, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
-        Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(46, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
-        Me.Label1.Location = New System.Drawing.Point(12, 9)
+        Me.Label1.ForeColor = System.Drawing.Color.Teal
+        Me.Label1.Location = New System.Drawing.Point(12, 8)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(72, 25)
@@ -369,6 +373,14 @@ Partial Class Form2
         '
         Me.DataGridView1.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle1
         Me.DataGridView1.Location = New System.Drawing.Point(12, 125)
         Me.DataGridView1.Margin = New System.Windows.Forms.Padding(2)
         Me.DataGridView1.Name = "DataGridView1"
@@ -641,7 +653,7 @@ Partial Class Form2
         Me.Panel11.Controls.Add(Me.Button16)
         Me.Panel11.Location = New System.Drawing.Point(217, 358)
         Me.Panel11.Name = "Panel11"
-        Me.Panel11.Size = New System.Drawing.Size(202, 125)
+        Me.Panel11.Size = New System.Drawing.Size(202, 124)
         Me.Panel11.TabIndex = 17
         '
         'Button18
@@ -653,7 +665,7 @@ Partial Class Form2
         Me.Button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button18.Location = New System.Drawing.Point(0, 0)
         Me.Button18.Name = "Button18"
-        Me.Button18.Size = New System.Drawing.Size(12, 125)
+        Me.Button18.Size = New System.Drawing.Size(15, 124)
         Me.Button18.TabIndex = 18
         Me.Button18.UseVisualStyleBackColor = True
         '
@@ -664,7 +676,7 @@ Partial Class Form2
         Me.Button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button17.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.Button17.ForeColor = System.Drawing.Color.Teal
-        Me.Button17.Location = New System.Drawing.Point(17, 62)
+        Me.Button17.Location = New System.Drawing.Point(18, 62)
         Me.Button17.Margin = New System.Windows.Forms.Padding(2)
         Me.Button17.Name = "Button17"
         Me.Button17.Size = New System.Drawing.Size(184, 62)
@@ -680,7 +692,7 @@ Partial Class Form2
         Me.Button16.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button16.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.Button16.ForeColor = System.Drawing.Color.Teal
-        Me.Button16.Location = New System.Drawing.Point(17, 0)
+        Me.Button16.Location = New System.Drawing.Point(18, 0)
         Me.Button16.Margin = New System.Windows.Forms.Padding(2)
         Me.Button16.Name = "Button16"
         Me.Button16.Size = New System.Drawing.Size(184, 62)
@@ -688,6 +700,14 @@ Partial Class Form2
         Me.Button16.Text = "Create"
         Me.Button16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button16.UseVisualStyleBackColor = False
+        '
+        'Panel12
+        '
+        Me.Panel12.BackgroundImage = CType(resources.GetObject("Panel12.BackgroundImage"), System.Drawing.Image)
+        Me.Panel12.Location = New System.Drawing.Point(12, 125)
+        Me.Panel12.Name = "Panel12"
+        Me.Panel12.Size = New System.Drawing.Size(1256, 583)
+        Me.Panel12.TabIndex = 18
         '
         'Form2
         '
@@ -697,6 +717,7 @@ Partial Class Form2
         Me.ClientSize = New System.Drawing.Size(1280, 720)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.Panel11)
+        Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel8)
         Me.Controls.Add(Me.Panel5)
         Me.Controls.Add(Me.RefreshButton1)
@@ -704,7 +725,7 @@ Partial Class Form2
         Me.Controls.Add(Me.RButton1)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Panel4)
-        Me.Controls.Add(Me.Panel2)
+        Me.Controls.Add(Me.Panel12)
         Me.Controls.Add(Me.DataGridView1)
         Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -772,4 +793,5 @@ Partial Class Form2
     Friend WithEvents Button17 As Button
     Friend WithEvents Button16 As Button
     Friend WithEvents Button18 As Button
+    Friend WithEvents Panel12 As Panel
 End Class
