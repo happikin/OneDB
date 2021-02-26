@@ -298,14 +298,9 @@ Public Class Form2
 
 
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        DataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(46, 45, 45) 'DARK MODE
-        DataGridView1.BorderStyle = BorderStyle.FixedSingle
-        DataGridView1.GridColor = Color.Black
-        DataGridView1.DefaultCellStyle.ForeColor = Color.White
-        DataGridView1.RowHeadersDefaultCellStyle.BackColor = Color.FromArgb(40, 97, 129)
-        'DataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(2, 78, 78)
-        DataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White
-        'DataGridView1.ColumnHeadersDefaultCellStyle = DataGridView1.EnableHeadersVisualStyles
+
+        DataGridView1.RowHeadersWidth = 20  'PERMANENT
+        DataGridView1.EnableHeadersVisualStyles = False 'PERMANENT
         Panel12.Visible = True
         Panel1.Visible = True
         Panel11.Visible = False
@@ -405,36 +400,93 @@ Public Class Form2
 
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click   'TOGGLE BUTTON
         MessageBox.Show("Dark mode is under development")
-        'Panel2.Visible = False
-        'Panel11.Visible = False
-        'If themeState = 0 Then  'if light theme
-        '    Panel2.BackColor = Color.Black
-        '    Button2.BackColor = Color.Black
-        '    Button3.BackColor = Color.Black
-        '    Button4.BackColor = Color.Black
-        '    Button5.BackColor = Color.Black
-        '    Button6.BackColor = Color.Black
-        '    Button8.BackColor = Color.Black
+        Panel2.Visible = False
+        Panel11.Visible = False
+        If themeState = 0 Then  'if currently light theme
+            Panel2.BackColor = Color.Black
+            Button2.BackColor = Color.Black
+            Button3.BackColor = Color.Black
+            Button4.BackColor = Color.Black
+            Button5.BackColor = Color.Black
+            Button6.BackColor = Color.Black
+            Button8.BackColor = Color.Black
+            Button15.BackColor = Color.Black
+            Button16.BackColor = Color.Black
+            Button17.BackColor = Color.Black
 
-        '    Me.BackColor = Color.Black
-        '    Button7.BackColor = Color.Black
-        '    Button1.Image = My.Resources.MenuDarkMode
-        '    Button6.Text = "Light Mode"
-        '    themeState = 1
-        'ElseIf themeState = 1 Then  'If dark mode
-        '    Panel2.BackColor = Color.White
-        '    Button8.BackColor = Color.White
-        '    Button2.BackColor = Color.White
-        '    Button3.BackColor = Color.White
-        '    Button7.BackColor = Color.White
-        '    Button4.BackColor = Color.White
-        '    Button5.BackColor = Color.White
-        '    Button6.BackColor = Color.White
-        '    Me.BackColor = Color.White
-        '    Button1.Image = My.Resources.icons8_menu_50__1_
-        '    Button6.Text = "Dark Mode"
-        '    themeState = 0
-        'End If
+            Label3.ForeColor = Color.White
+            Label4.ForeColor = Color.White
+            Label6.ForeColor = Color.White
+            Label5.ForeColor = Color.White
+            TextBox1.ForeColor = Color.White
+            TextBox1.BackColor = Color.FromArgb(46, 45, 45)
+            RichTextBox1.ForeColor = Color.White
+            RichTextBox1.BackColor = Color.FromArgb(69, 68, 68)
+            RichTextBox2.ForeColor = Color.White
+            RichTextBox2.BackColor = Color.FromArgb(69, 68, 68)
+            ComboBox1.BackColor = Color.FromArgb(69, 68, 68)
+            ComboBox2.BackColor = Color.FromArgb(69, 68, 68)
+            ComboBox3.BackColor = Color.FromArgb(69, 68, 68)
+            ComboBox1.ForeColor = Color.White
+            ComboBox2.ForeColor = Color.White
+            ComboBox3.ForeColor = Color.White
+
+            Me.BackColor = Color.FromArgb(46, 45, 45)
+            DataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(46, 45, 45) 'DARK MODE
+            DataGridView1.BorderStyle = BorderStyle.FixedSingle 'DARK MODE
+            DataGridView1.GridColor = Color.Black   'DARK MODE
+            DataGridView1.DefaultCellStyle.ForeColor = Color.White 'DARK MODE
+            DataGridView1.RowHeadersDefaultCellStyle.BackColor = Color.FromArgb(40, 97, 129)    'DARK MODE
+            DataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(2, 78, 78)   'DARK MODE
+            DataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White 'DARK MODE    
+            Button7.BackColor = Color.Black
+            'Button1.Image = My.Resources.MenuDarkMode
+            Button6.Text = "Light Mode"
+            themeState = 1
+        ElseIf themeState = 1 Then  'If currently dark mode
+
+            Button8.BackColor = Color.White
+            Button2.BackColor = Color.White
+            Button3.BackColor = Color.White
+            Button7.BackColor = Color.White
+            Button4.BackColor = Color.White
+            Button5.BackColor = Color.White
+            Button6.BackColor = Color.White
+            Button15.BackColor = Color.White
+            Button16.BackColor = Color.White
+            Button17.BackColor = Color.White
+
+            Label3.ForeColor = Color.Black
+            Label4.ForeColor = Color.Black
+            Label6.ForeColor = Color.Black
+            Label5.ForeColor = Color.Black
+            TextBox1.ForeColor = Color.Black
+            TextBox1.BackColor = Color.FromArgb(255, 255, 255)
+            RichTextBox1.ForeColor = Color.Black
+            RichTextBox1.BackColor = Color.FromArgb(255, 255, 255)
+            RichTextBox2.ForeColor = Color.Black
+            RichTextBox2.BackColor = Color.FromArgb(255, 255, 255)
+            ComboBox1.BackColor = Color.FromArgb(255, 255, 255)
+            ComboBox2.BackColor = Color.FromArgb(255, 255, 255)
+            ComboBox3.BackColor = Color.FromArgb(255, 255, 255)
+            ComboBox1.ForeColor = Color.Black
+            ComboBox2.ForeColor = Color.Black
+            ComboBox3.ForeColor = Color.Black
+
+            DataGridView1.DefaultCellStyle.BackColor = Color.White 'LIGHT MODE
+            DataGridView1.BorderStyle = BorderStyle.FixedSingle 'LIGHT MODE
+            DataGridView1.GridColor = Color.Black   'FIX MODE
+            DataGridView1.DefaultCellStyle.ForeColor = Color.Black 'LIGHT MODE
+            DataGridView1.RowHeadersDefaultCellStyle.BackColor = Color.FromArgb(4, 212, 212)    'LIGHT MODE
+            DataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(255, 255, 255)   'LIGHT MODE
+            DataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black 'LIGHT MODE    
+            Panel2.BackColor = Color.White
+
+            Me.BackColor = Color.White
+            'Button1.Image = My.Resources.icons8_menu_50__1_
+            Button6.Text = "Dark Mode"
+            themeState = 0
+        End If
     End Sub
 
     Private Sub Panel4_Paint(sender As Object, e As PaintEventArgs) Handles Panel4.Paint
@@ -666,6 +718,14 @@ Public Class Form2
     End Sub
 
     Private Sub DataGridView1_CellContentClick_1(sender As Object, e As DataGridViewCellEventArgs)
+
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+
+    End Sub
+
+    Private Sub Label2_Click(sender As Object, e As EventArgs) Handles Label2.Click
 
     End Sub
 
