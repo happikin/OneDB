@@ -296,9 +296,50 @@ Public Class Form2
         End If
     End Sub
 
+    Public Sub initialLighUI()
+        Button8.BackColor = Color.White
+        Button2.BackColor = Color.White
+        Button3.BackColor = Color.White
+        Button7.BackColor = Color.White
+        Button4.BackColor = Color.White
+        Button5.BackColor = Color.White
+        Button6.BackColor = Color.White
+        Button15.BackColor = Color.White
+        Button16.BackColor = Color.White
+        Button17.BackColor = Color.White
+
+        Label3.ForeColor = Color.Black
+        Label4.ForeColor = Color.Black
+        Label6.ForeColor = Color.Black
+        Label5.ForeColor = Color.Black
+        TextBox1.ForeColor = Color.Black
+        TextBox1.BackColor = Color.FromArgb(255, 255, 255)
+        RichTextBox1.ForeColor = Color.Black
+        RichTextBox1.BackColor = Color.FromArgb(255, 255, 255)
+        RichTextBox2.ForeColor = Color.Black
+        RichTextBox2.BackColor = Color.FromArgb(255, 255, 255)
+        ComboBox1.BackColor = Color.FromArgb(255, 255, 255)
+        ComboBox2.BackColor = Color.FromArgb(255, 255, 255)
+        ComboBox3.BackColor = Color.FromArgb(255, 255, 255)
+        ComboBox1.ForeColor = Color.Black
+        ComboBox2.ForeColor = Color.Black
+        ComboBox3.ForeColor = Color.Black
+
+        DataGridView1.DefaultCellStyle.BackColor = Color.White 'LIGHT MODE
+        DataGridView1.BorderStyle = BorderStyle.FixedSingle 'LIGHT MODE
+        DataGridView1.GridColor = Color.Black   'FIX MODE
+        DataGridView1.DefaultCellStyle.ForeColor = Color.Black 'LIGHT MODE
+        DataGridView1.RowHeadersDefaultCellStyle.BackColor = Color.FromArgb(4, 212, 212)    'LIGHT MODE
+        DataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(255, 255, 255)   'LIGHT MODE
+        DataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black 'LIGHT MODE    
+        Panel2.BackColor = Color.White
+
+        Me.BackColor = Color.White
+        Button6.Text = "Dark Mode"
+    End Sub
 
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        initialLighUI()
         DataGridView1.RowHeadersWidth = 20  'PERMANENT
         DataGridView1.EnableHeadersVisualStyles = False 'PERMANENT
         Panel12.Visible = True
@@ -308,19 +349,19 @@ Public Class Form2
         Panel5.Visible = False
         Panel2.BringToFront()
         themeState = 0
-        Button15.BackColor = Color.White
-        Button16.BackColor = Color.White
-        Button17.BackColor = Color.White
-        Button7.BackColor = Color.White
-        Button8.BackColor = Color.White
-        Panel4.BackColor = Color.White
-        Panel2.BackColor = Color.White
-        Button2.BackColor = Color.White
-        Button3.BackColor = Color.White
-        Button4.BackColor = Color.White
-        Button5.BackColor = Color.White
-        Button6.BackColor = Color.White
-        Button6.Text = "Dark Mode"
+        'Button15.BackColor = Color.White
+        'Button16.BackColor = Color.White
+        'Button17.BackColor = Color.White
+        'Button7.BackColor = Color.White
+        'Button8.BackColor = Color.White
+        'Panel4.BackColor = Color.White
+        'Panel2.BackColor = Color.White
+        'Button2.BackColor = Color.White
+        'Button3.BackColor = Color.White
+        'Button4.BackColor = Color.White
+        'Button5.BackColor = Color.White
+        'Button6.BackColor = Color.White
+        'Button6.Text = "Dark Mode"
         Panel2.Visible = False
 
         conOne.server = "localhost"
@@ -653,9 +694,7 @@ Public Class Form2
 
     Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
         If ComboBox3.SelectedItem IsNot Nothing Then
-
             conditionContainer = New entryItem(ComboBox3.SelectedItem.ToString, RichTextBox2.Text, " ")
-
             For index = 0 To TypeFieldArrayCount - 1
                 If conditionContainer.getConditionName = TypeFieldArray(index).getColName Then
                     conditionContainer.setConditionType(TypeFieldArray(index).getFieldType)
@@ -663,9 +702,8 @@ Public Class Form2
                     Exit For
                 End If
             Next
-
             Panel8.Visible = False
-            ComboBox3.Items.Clear()
+            'ComboBox3.Items.Clear()
 
             showEditingPanel(panelButtonName)
             Button11.Enabled = True
@@ -730,6 +768,7 @@ Public Class Form2
     End Sub
 
     Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
+        TextBox1.Clear()
         Dim tbname As String = ComboBox1.SelectedItem.ToString
         Dim query As String
         Select Case (Button11.Text)

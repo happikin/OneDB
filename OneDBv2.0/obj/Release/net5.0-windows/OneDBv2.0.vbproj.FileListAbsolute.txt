@@ -15,8 +15,10 @@ C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\bin\Release\net5.0-windows\Ubiet
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\bin\Release\net5.0-windows\Zstandard.Net.dll
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\bin\Release\net5.0-windows\Renci.SshNet.dll
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\bin\Release\net5.0-windows\SshNet.Security.Cryptography.dll
+C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Release\net5.0-windows\OneDBv2.0.vbprojAssemblyReference.cache
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Release\net5.0-windows\OneDBv2._0.Form1.resources
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Release\net5.0-windows\OneDBv2._0.Form2.resources
+C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Release\net5.0-windows\OneDBv2._0.Form3.resources
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Release\net5.0-windows\OneDBv2._0.MainMDIContainder.resources
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Release\net5.0-windows\OneDBv2._0.Resources.resources
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Release\net5.0-windows\OneDBv2.0.vbproj.GenerateResource.cache
@@ -29,4 +31,3 @@ C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Release\net5.0-windows\OneDB
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Release\net5.0-windows\ref\OneDBv2.0.dll
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Release\net5.0-windows\OneDBv2.0.pdb
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Release\net5.0-windows\OneDBv2.0.genruntimeconfig.cache
-C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Release\net5.0-windows\OneDBv2._0.Form3.resources

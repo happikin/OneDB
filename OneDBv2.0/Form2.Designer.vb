@@ -85,10 +85,11 @@ Partial Class Form2
         'Panel1
         '
         Me.Panel1.BackgroundImage = CType(resources.GetObject("Panel1.BackgroundImage"), System.Drawing.Image)
-        Me.Panel1.Location = New System.Drawing.Point(0, 663)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1280, 57)
+        Me.Panel1.Size = New System.Drawing.Size(1280, 720)
         Me.Panel1.TabIndex = 0
         Me.Panel1.Visible = False
         '
@@ -741,8 +742,8 @@ Partial Class Form2
         Me.Controls.Add(Me.RButton1)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Panel4)
-        Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.Panel12)
+        Me.Controls.Add(Me.DataGridView1)
         Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Margin = New System.Windows.Forms.Padding(2)
