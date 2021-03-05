@@ -1,4 +1,5 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports System.IO
 Public Class Form1
     Public conOne As New connCredentials
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
@@ -61,10 +62,24 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        conOne.db = "authdetails"
-        conOne.pswd = "Raina@1999"
-        conOne.server = "localhost"
-        conOne.uid = "root"
+        Dim credCollec(3) As String
+        Using reader As New System.IO.StreamReader("credentials.txt")
+            Dim buffer(1) As Char
+            Dim i = 0, size As Integer = 0
+            While Not reader.EndOfStream
+                reader.Read(buffer, 0, 1)
+                If buffer(0) = ControlChars.Quote Then
+                    credCollec(i) = reader.ReadLine()
+                    'MsgBox(conOne.server, 64, "Hehaa!!")
+                    i += 1
+                End If
+            End While
+
+        End Using
+        conOne.server = credCollec(0)
+        conOne.uid = credCollec(1)
+        conOne.pswd = credCollec(2)
+        conOne.db = credCollec(3)
 
     End Sub
 

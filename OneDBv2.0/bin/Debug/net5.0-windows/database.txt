@@ -1,0 +1,5 @@
+//----DO NOT ALTER THIS DOCUMENT----//
+server:"localhost 
+userid:"root
+password:"Raina@1999
+database:"sakila

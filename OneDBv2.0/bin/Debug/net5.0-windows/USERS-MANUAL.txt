@@ -1,0 +1,5 @@
+WARNING : DO NOT ALTER ANY FILE IN THIS FOLDER. MAKE A COPY AND THEN EXPERIMENT
+
+- OneDB uses two text files to set up MySQL connections outside of the code.
+  one is database.txt which requires users input only after the " character
+  second file is credentials.txt for getting user input to connect to the authentication database

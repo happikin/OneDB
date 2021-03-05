@@ -30,3 +30,4 @@ C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\net5.0-windows\OneDBv2
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\net5.0-windows\ref\OneDBv2.0.dll
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\net5.0-windows\OneDBv2.0.pdb
 C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\net5.0-windows\OneDBv2.0.genruntimeconfig.cache
+C:\Users\yashe\source\repos\OneDBv2.0\OneDBv2.0\obj\Debug\net5.0-windows\OneDBv2.0.vbprojAssemblyReference.cache

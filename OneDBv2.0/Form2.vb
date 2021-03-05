@@ -364,10 +364,24 @@ Public Class Form2
         'Button6.Text = "Dark Mode"
         Panel2.Visible = False
 
-        conOne.server = "localhost"
-        conOne.uid = "root"
-        conOne.pswd = "Raina@1999"
-        conOne.db = "demo"
+        Dim credCollec(3) As String
+        Using reader As New System.IO.StreamReader("database.txt")
+            Dim buffer(1) As Char
+            Dim i = 0, size As Integer = 0
+            While Not reader.EndOfStream
+                reader.Read(buffer, 0, 1)
+                If buffer(0) = ControlChars.Quote Then
+                    credCollec(i) = reader.ReadLine()
+                    'MsgBox(conOne.server, 64, "Hehaa!!")
+                    i += 1
+                End If
+            End While
+        End Using
+        conOne.server = credCollec(0)
+        conOne.uid = credCollec(1)
+        conOne.pswd = credCollec(2)
+        conOne.db = credCollec(3)
+
 
         Timer1.Interval = 3000
         Timer1.Start()
