@@ -10,3 +10,12 @@ However the application is turning towards a multiDB functoinality very quickly!
 This DataBase(MySQL) handling system is mainly for small data jobs like for a college or a uni.
 The custom queries from the GUI become little complicated and go way beyond what a user would like to have,
 thus i have kept it very usable and simple for the above mentioned use cases.
+ ## Requirements to use OneDB<br />
+  I. There are two .txt files in the OneDB Debug folder which are not to me moved anywhere else.<br />
+    in the credentials.txt file write the database name where all username/password are stored<br />
+    in the database.txt file write the database name which you want to access through the OneDB GUI Application<br />
+    step 1: create database authdetails;<br />
+    step 2: create table onedb(username char(50) NOTNULL,password char(50) NOTNULL);<br />
+    This wil be enough to make OneDB go boom on your computer!<br />
+  II. Note : I developed this application on a 14 inch laptop with 150%(recommended) zoom setting,<br />
+             so if it malfunctions onyour computer then do the above adjustments or help imporove the code.<br />
